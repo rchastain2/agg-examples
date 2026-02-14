@@ -1,7 +1,11 @@
+arc
+arcRel
 clearAll
 fillColor
 fillLinearGradient
 lineCap
 lineColor
+lineJoin
 lineWidth
+noLine
 roundedRect

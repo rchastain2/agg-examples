@@ -411,15 +411,8 @@ type
     procedure verLineTo(y: double);
     procedure verLineRel(dy: double);
 
-    procedure arcTo(
-      rx, ry, angle: double;
-      largeArcFlag, sweepFlag: boolean;
-      x, y: double);
-
-    procedure arcRel(
-      rx, ry, angle: double;
-      largeArcFlag, sweepFlag: boolean;
-      dx, dy: double);
+    procedure arcTo(rx, ry, angle: double; largeArcFlag, sweepFlag: boolean; x, y: double);
+    procedure arcRel(rx, ry, angle: double; largeArcFlag, sweepFlag: boolean; dx, dy: double);
 
     procedure quadricCurveTo(xCtrl, yCtrl, xTo, yTo: double); overload;
     procedure quadricCurveRel(dxCtrl, dyCtrl, dxTo, dyTo: double); overload;

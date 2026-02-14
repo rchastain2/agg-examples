@@ -18,8 +18,6 @@ var
   c1, c2: Color;
 begin
   agg^.clearAll(0, 0, 0, 0);
-
-  // Star
   agg^.lineCap(CapRound);
   agg^.lineWidth(8);
   agg^.lineColor(0, 0, 255, 255);
@@ -30,7 +28,6 @@ var
   p: TAggExample1;
   
 begin
-  Randomize;
   p := TAggExample1.Create(200, 200, ChangeFileExt({$I %FILE%}, '.png'));
   p.DrawImage;
   p.SaveToPng;

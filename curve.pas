@@ -30,7 +30,6 @@ var
   p: TAggExample1;
   
 begin
-  Randomize;
   p := TAggExample1.Create(200, 200, ChangeFileExt({$I %FILE%}, '.png'));
   p.DrawImage;
   p.SaveToPng;

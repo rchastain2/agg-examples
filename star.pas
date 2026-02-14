@@ -26,7 +26,6 @@ begin
   c2.Construct(0, 0, 255, 50);
   agg^.fillLinearGradient(200, 200, 300, 300, c1, c2);
   agg^.Star(100, 100, 30, 70, 55, 5);
-  
 end;
 
 var

@@ -29,7 +29,7 @@ git reset --hard $SHA1
 git clone https://gitlab.com/freepascal.org/lazarus/lazarus.git
 ```
 
-Units are in [components/aggpas/src](https://gitlab.com/freepascal.org/lazarus/lazarus/-/tree/main/components/aggpas/src?ref_type=heads) folder.
+Units are in [components/aggpas/src](https://gitlab.com/freepascal.org/lazarus/lazarus/-/tree/main/components/aggpas/src?ref_type=heads).
 
 ## How to compile examples
 
@@ -47,4 +47,4 @@ You will have to edit *Makefile* and provide a path to your AGGPas units.
 
 ## AggExample unit
 
-The *AggExample* unit derives from [Agg2DConsole.dpr](https://github.com/graemeg/fpGUI/blob/develop/extras/aggpas/agg-demos/Agg2DConsole.dpr) program.
+The *AggExample* unit is derived from [Agg2DConsole.dpr](https://github.com/graemeg/fpGUI/blob/develop/extras/aggpas/agg-demos/Agg2DConsole.dpr).

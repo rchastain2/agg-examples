@@ -1,7 +1,9 @@
 arial.ttf 
 
 # Exemples à finir
-path.*
 polyline.*
 
 beauty.lua
+
+*.o
+*.ppu
