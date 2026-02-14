@@ -29,6 +29,10 @@ git reset --hard $SHA1
 ```
 -->
 
+Les unités se trouvent dans le dossier [framework/src/main/pascal/corelib/render/software](https://github.com/graemeg/fpGUI/tree/develop/framework/src/main/pascal/corelib/render/software).
+
+L'unité *agg_2D* se trouve dans [extras/aggpas](https://github.com/graemeg/fpGUI/tree/develop/extras/aggpas).
+
 ### Lazarus
 
 ```
