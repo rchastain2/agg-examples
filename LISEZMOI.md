@@ -11,6 +11,11 @@ AGGPas fait partie de fpGUI et de Lazarus.
 ### fpGUI
 
 ```
+git clone https://github.com/graemeg/fpGUI.git
+```
+
+<!--
+```
 git clone --single-branch --branch maint https://github.com/graemeg/fpGUI.git
 ```
 
@@ -22,6 +27,7 @@ git clone $URL $PROJECT_NAME
 cd $PROJECT_NAME
 git reset --hard $SHA1
 ```
+-->
 
 ### Lazarus
 
