@@ -5,3 +5,5 @@ path.*
 polyline.*
 roundedrect.*
 triangle.*
+
+beauty.lua

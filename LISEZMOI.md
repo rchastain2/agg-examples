@@ -33,8 +33,6 @@ Les unités se trouvent dans le dossier [components/aggpas/src](https://gitlab.c
 
 ## Comment compiler les exemples
 
-Les exemples peuvent être compilés avec *make*.
-
 Compiler un exemple :
 ```
 make arc
@@ -45,7 +43,7 @@ Compiler tous les exemples :
 make
 ```
 
-Pour compiler les exemples avec *make* vous devrez modifier (dans le fichier *Makefile*) le chemin vers les unités AGGPas.
+Vous devrez modifier dans *Makefile* le chemin vers les unités AGGPas.
 
 ## Unité AggExample
 

@@ -33,8 +33,6 @@ Units are in [components/aggpas/src](https://gitlab.com/freepascal.org/lazarus/l
 
 ## How to compile examples
 
-I compile the examples using *make*.
-
 Compile one example:
 ```
 make arc
@@ -45,7 +43,7 @@ Compile all examples:
 make
 ```
 
-If you use *make* you will have to edit *Makefile* and provide a path to your AGGPas units.
+You will have to edit *Makefile* and provide a path to your AGGPas units.
 
 ## AggExample unit
 
