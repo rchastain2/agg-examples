@@ -1,0 +1,123 @@
+$ git log --all -- src/corelib/render/software/agg_2D.pas
+commit 95804179e56c544bdf59bc5cbbd55495cbd30c4a
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Sat Feb 7 16:45:04 2026 +0000
+
+    PasBuild support: restructured whole repo with 2 build modules
+    
+    
+    Before, we tried FPC's fpmake, but that is not document and so much manual
+    effort. It never worked well. I created PasBuild (separate project) to
+    solve that. This commit refactors our repo to comply with the layout
+    PasBuild recommends.
+    
+    Examples and Contributed code is not yet structured into build modules.
+
+commit 54fe6810316eca85b1b75b87c93ee143130ae085
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Sat Oct 21 20:15:48 2017 +0100
+
+    Agg2D.Arc() and agg_2D.Arc() now supports fill and stroke. Before they only supported stroke.
+
+commit 3dfce61fd9a3abba7d8a3825b8fa677bb75907e0
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Wed Aug 30 19:43:19 2017 +0100
+
+    AggPas: agg_2D's Arc() implementation had parameters in the wrong order.
+    
+    If you compared the Agg2D vs the Agg_2D Arc() behaviour you would see they
+    give different results. After this commit they generate the
+    same [correct] output.
+
+commit 01b2004ce52214d6e1687ef4b96b5da54b4e7fcf
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Mon Jun 19 11:19:39 2017 +0100
+
+    aggpas: Updates unit head comments describing the purpose of each unit.
+
+commit 27168dcbcbe075a694bfe4eb2af60608561170f8
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Fri May 27 00:34:58 2016 +0100
+
+    AggPas: Updated non-gui add_2D.pas unit's Text() and TextWidth() for UTF-8.
+    
+    Synced the code with the already tested and working Agg2D.pas unit.
+
+commit 442cc9aff7257830c20854212f848983fb63255c
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Wed May 25 23:04:08 2016 +0100
+
+    AggPas: synced some code from Agg2D.pas to agg_2D.pas
+    
+    * compiler defines for switching between font engines
+    * agg include file for global settings.
+
+commit 6346e241a8a733019f654a5d25904f6c6c19eb4b
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Wed May 25 11:26:41 2016 +0100
+
+    aggpas: Greatly improved the various dashed line output.
+    
+    The linewidth is taken into account as well and scales nicely.
+    Also we don't have the Solid Line hack any more.
+
+commit d2dc5c6fb1222cb4c7eee4b3f136742af1f1a31d
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Wed May 25 11:24:29 2016 +0100
+
+    aggpas: add or remove dash generator from rendering pipeline as needed
+    
+    This only applies to the "agg_2D.pas" (non-GUI) unit for now. Soon
+    this will be applied to the "agg2D.pas" unit too.
+
+commit 253a2f1f16c387a623eb0ada72cd72ad0f7468d5
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Tue May 24 22:57:13 2016 +0100
+
+    aggpas: Add LineStyle support to agg_2D (non GUI) like we have in TAgg2D
+
+commit 7d55496d70cbf587b8a63773c0f1a5753bcbc225
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Fri Jan 22 19:35:05 2016 +0000
+
+    agg: .Font() clean-up.
+    
+    The original implementation was correct, I just removed the magic numbers
+    and replaced it with better commented code.
+
+commit d5cc2c694896a4e5ab82ca29373ae702009dbab6
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Wed Apr 29 06:54:26 2015 +0100
+
+    aggpas: New Blur() method for TAgg2D and Agg2D
+
+commit 023aea10cc61dfef406cd39b8cf76be65a9df134
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Wed Oct 22 15:35:36 2014 +0100
+
+    agg_2D: fixes compilation errors.
+    
+    The interface did not match the implementation section. My fault for not
+    doing a good enough sync with agg2d.pas! :-/
+
+commit ae49a6e611fc8d0a6e2d38b6e51a224cbbb807ba
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Wed Oct 15 13:38:32 2014 +0100
+
+    Sync more fpGUI Agg2D code to console agg_2D unit.
+    
+    Not much, but it is a start. There are still many more of this to come.
+
+commit 8e8f619239f08e7c085a15726dc815d15b4f5a6f
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Wed Oct 15 13:37:19 2014 +0100
+
+    console agg_2D: Line() and Rectangle() now have FixAlignment parameter
+    
+    This syncs the console agg_2D with the fpGUI Agg2D implementation.
+
+commit 73231e4da21b2dc7173d7d971105fcb85392a6a9
+Author: Graeme Geldenhuys <graemeg@gmail.com>
+Date:   Fri Jan 24 16:45:15 2014 +0000
+
+    aggpas: Makes the agg_2D.pas unit compilable again.

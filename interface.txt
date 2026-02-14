@@ -1,0 +1,557 @@
+{ GLOBAL VARIABLES & CONSTANTS }
+const
+  // LineJoin
+  JoinMiter = miter_join;
+  JoinRound = round_join;
+  JoinBevel = bevel_join;
+
+  // LineCap
+  CapButt = butt_cap;
+  CapSquare = square_cap;
+  CapRound = round_cap;
+
+  // TextAlignment
+  AlignLeft = 0;
+  AlignRight = 1;
+  AlignCenter = 2;
+  AlignTop = AlignRight;
+  AlignBottom = AlignLeft;
+
+  // BlendMode
+  BlendAlpha = end_of_comp_op_e;
+  BlendClear = comp_op_clear;
+  BlendSrc = comp_op_src;
+  BlendDst = comp_op_dst;
+  BlendSrcOver = comp_op_src_over;
+  BlendDstOver = comp_op_dst_over;
+  BlendSrcIn = comp_op_src_in;
+  BlendDstIn = comp_op_dst_in;
+  BlendSrcOut = comp_op_src_out;
+  BlendDstOut = comp_op_dst_out;
+  BlendSrcAtop = comp_op_src_atop;
+  BlendDstAtop = comp_op_dst_atop;
+  BlendXor = comp_op_xor;
+  BlendAdd = comp_op_plus;
+  BlendSub = comp_op_minus;
+  BlendMultiply = comp_op_multiply;
+  BlendScreen = comp_op_screen;
+  BlendOverlay = comp_op_overlay;
+  BlendDarken = comp_op_darken;
+  BlendLighten = comp_op_lighten;
+  BlendColorDodge = comp_op_color_dodge;
+  BlendColorBurn = comp_op_color_burn;
+  BlendHardLight = comp_op_hard_light;
+  BlendSoftLight = comp_op_soft_light;
+  BlendDifference = comp_op_difference;
+  BlendExclusion = comp_op_exclusion;
+  BlendContrast = comp_op_contrast;
+
+  { TYPES DEFINITION }
+type
+  Color_ptr = ^Color;
+  Color = rgba8;
+
+  Rect_ = agg_basics.rect;
+  RectD = agg_basics.rect_d;
+
+  Affine = trans_affine;
+  Affine_ptr = trans_affine_ptr;
+
+  FontRasterizer = gray8_adaptor_type;
+  FontRasterizer_ptr = gray8_adaptor_type_ptr;
+
+  FontScanline = gray8_scanline_type;
+  FontScanline_ptr = gray8_scanline_type_ptr;
+
+{$IFDEF AGG2D_USE_FREETYPE }
+  FontEngine = font_engine_freetype_int32;
+{$ENDIF }
+{$IFDEF AGG2D_USE_WINFONTS}
+  FontEngine = font_engine_win32_tt_int32;
+{$ENDIF }
+
+  Gradient = (Solid, Linear, Radial);
+  Direction = (CW, CCW);
+
+  LineJoin_ = int;
+  LineCap_ = int;
+  BlendMode_ = comp_op_e;
+
+  TextAlignment = int;
+
+  DrawPathFlag = (
+    FillOnly,
+    StrokeOnly,
+    FillAndStroke,
+    FillWithLineColor);
+
+  ViewportOption = (
+    Anisotropic,
+    XMinYMin,
+    XMidYMin,
+    XMaxYMin,
+    XMinYMid,
+    XMidYMid,
+    XMaxYMid,
+    XMinYMax,
+    XMidYMax,
+    XMaxYMax);
+
+  ImageFilter_ = (
+    NoFilter,
+    Bilinear,
+    Hanning,
+    Hermite,
+    Quadric,
+    Bicubic,
+    Catrom,
+    Spline16,
+    Spline36,
+    Blackman144);
+
+  ImageResample_ = (
+    NoResample,
+    ResampleAlways,
+    ResampleOnZoomOut);
+
+  FontCacheType = (
+    RasterFontCache,
+    VectorFontCache);
+
+  LineStyle = (
+    stySolid,
+    styDash,
+    styDot,
+    styDashDot,
+    styDashDotDot);
+
+  Transformations_ptr = ^Transformations_;
+  Transformations_ = record
+    affineMatrix: array[0..5] of double;
+
+  end;
+
+  Image_ptr = ^Image;
+  Image = object
+    renBuf: rendering_buffer;
+
+    constructor Construct; overload;
+    constructor Construct(buf: int8u_ptr; width_, height_: unsigned; stride: int); overload;
+    destructor Destruct;
+
+    procedure attach(buf: int8u_ptr; width_, height_: unsigned; stride: int);
+
+    function width: int;
+    function height: int;
+
+    procedure premultiply;
+    procedure demultiply;
+
+  end;
+
+  Agg2DRasterizerGamma = object(vertex_source)
+    m_alpha: gamma_multiply;
+    m_gamma: gamma_power;
+
+    constructor Construct(alpha, gamma: double);
+
+    function func_operator_gamma(x: double): double; virtual;
+
+  end;
+
+  Agg2D_ptr = ^Agg2D;
+  Agg2D = object
+  private
+    m_rbuf: rendering_buffer;
+
+    m_pixFormat, m_pixFormatComp, m_pixFormatPre, m_pixFormatCompPre: pixel_formats;
+    m_renBase, m_renBaseComp, m_renBasePre, m_renBaseCompPre: renderer_base;
+
+    m_renSolid, m_renSolidComp: renderer_scanline_aa_solid;
+
+    m_allocator: span_allocator;
+    m_clipBox: RectD;
+
+    m_blendMode, m_imageBlendMode: BlendMode_;
+
+    m_imageBlendColor: Color;
+
+    m_scanline: scanline_u8;
+    m_rasterizer: rasterizer_scanline_aa;
+
+    m_masterAlpha, m_antiAliasGamma: double;
+
+    m_fillColor, m_lineColor: Color;
+
+    m_fillGradient, m_lineGradient: pod_auto_array;
+
+    m_lineCap: LineCap_;
+    m_lineJoin: LineJoin_;
+
+    m_fillGradientFlag, m_lineGradientFlag: Gradient;
+
+    m_fillGradientMatrix, m_lineGradientMatrix: trans_affine;
+
+    m_fillGradientD1,
+      m_lineGradientD1,
+      m_fillGradientD2,
+      m_lineGradientD2,
+      m_textAngle: double;
+    m_textAlignX,
+      m_textAlignY: TextAlignment;
+    m_textHints: boolean;
+    m_fontHeight,
+      m_fontAscent,
+      m_fontDescent: double;
+    m_fontCacheType: FontCacheType;
+
+    m_imageFilter: ImageFilter_;
+    m_imageResample: ImageResample_;
+    m_imageFilterLut: image_filter_lut;
+
+    m_fillGradientInterpolator,
+      m_lineGradientInterpolator: span_interpolator_linear;
+
+    m_linearGradientFunction: gradient_x;
+    m_radialGradientFunction: gradient_circle;
+
+    m_lineWidth: double;
+    m_evenOddFlag: boolean;
+
+    m_path: path_storage;
+    m_transform: trans_affine;
+
+    m_convCurve: conv_curve;
+    m_convStroke: conv_stroke;
+    m_convDash: conv_dash;
+
+    m_pathTransform, m_strokeTransform: conv_transform;
+
+{$IFNDEF AGG2D_NO_FONT}
+    m_fontEngine: FontEngine;
+    m_fontCacheManager: font_cache_manager;
+{$ENDIF}
+{$IFDEF AGG2D_USE_WINFONTS }
+    m_fontDC: HDC;
+{$ENDIF }
+
+    // Other Pascal-specific members
+    m_gammaNone: gamma_none;
+    m_gammaAgg2D: Agg2DRasterizerGamma;
+
+    m_ifBilinear: image_filter_bilinear;
+    m_ifHanning: image_filter_hanning;
+    m_ifHermite: image_filter_hermite;
+    m_ifQuadric: image_filter_quadric;
+    m_ifBicubic: image_filter_bicubic;
+    m_ifCatrom: image_filter_catrom;
+    m_ifSpline16: image_filter_spline16;
+    m_ifSpline36: image_filter_spline36;
+    m_ifBlackman144: image_filter_blackman144;
+
+  public
+    constructor Construct;
+    destructor Destruct;
+
+    // Setup
+    procedure attach(buf: int8u_ptr; width_, height_: unsigned; stride: int); overload;
+    procedure attach(img: Image_ptr); overload;
+
+    procedure clipBox(x1, y1, x2, y2: double); overload;
+    function clipBox: RectD; overload;
+
+    procedure clearAll(c: Color); overload;
+    procedure clearAll(r, g, b: unsigned; a: unsigned = 255); overload;
+    procedure FillAll(c: Color); overload;
+    procedure FillAll(r, g, b: byte; a: byte = 255); overload;
+
+    procedure clearClipBox(c: Color); overload;
+    procedure clearClipBox(r, g, b: unsigned; a: unsigned = 255); overload;
+
+    // Conversions
+    procedure worldToScreen(x, y: double_ptr); overload;
+    procedure screenToWorld(x, y: double_ptr); overload;
+    function worldToScreen(scalar: double): double; overload;
+    function screenToWorld(scalar: double): double; overload;
+
+    procedure alignPoint(x, y: double_ptr);
+
+    function inBox(worldX, worldY: double): boolean;
+
+    // General Attributes
+    procedure blendMode(m: BlendMode_); overload;
+    function blendMode: BlendMode_; overload;
+
+    procedure imageBlendMode(m: BlendMode_); overload;
+    function imageBlendMode: BlendMode_; overload;
+
+    procedure imageBlendColor(c: Color); overload;
+    procedure imageBlendColor(r, g, b: unsigned; a: unsigned = 255); overload;
+    function imageBlendColor: Color; overload;
+
+    procedure masterAlpha(a: double); overload;
+    function masterAlpha: double; overload;
+
+    procedure antiAliasGamma(g: double); overload;
+    function antiAliasGamma: double; overload;
+
+    procedure fillColor(c: Color); overload;
+    procedure fillColor(r, g, b: unsigned; a: unsigned = 255); overload;
+    procedure noFill;
+
+    procedure lineColor(c: Color); overload;
+    procedure lineColor(r, g, b: unsigned; a: unsigned = 255); overload;
+    procedure noLine;
+
+    function fillColor: Color; overload;
+    function lineColor: Color; overload;
+
+    procedure fillLinearGradient(x1, y1, x2, y2: double; c1, c2: Color; profile: double = 1.0);
+    procedure lineLinearGradient(x1, y1, x2, y2: double; c1, c2: Color; profile: double = 1.0);
+
+    procedure fillRadialGradient(x, y, r: double; c1, c2: Color; profile: double = 1.0); overload;
+    procedure lineRadialGradient(x, y, r: double; c1, c2: Color; profile: double = 1.0); overload;
+
+    procedure fillRadialGradient(x, y, r: double; c1, c2, c3: Color); overload;
+    procedure lineRadialGradient(x, y, r: double; c1, c2, c3: Color); overload;
+
+    procedure fillRadialGradient(x, y, r: double); overload;
+    procedure lineRadialGradient(x, y, r: double); overload;
+
+    procedure lineWidth(w: double);
+    function lineWidth_(w: double): double;
+
+    procedure lineCap(cap: LineCap_); overload;
+    function lineCap: LineCap_; overload;
+
+    procedure lineJoin(join: LineJoin_); overload;
+    function lineJoin: LineJoin_; overload;
+
+    procedure fillEvenOdd(evenOddFlag: boolean); overload;
+    function fillEvenOdd: boolean; overload;
+
+    procedure SetLineStyle(awidth: double; astyle: LineStyle);
+
+    // Transformations
+    function transformations: Transformations_; overload;
+    procedure transformations(tr: Transformations_ptr); overload;
+    procedure resetTransformations;
+
+    procedure affine(tr: Affine_ptr); overload;
+    procedure affine(tr: Transformations_ptr); overload;
+
+    procedure rotate(angle: double);
+    procedure scale(sx, sy: double);
+    procedure skew(sx, sy: double);
+    procedure translate(x, y: double);
+
+    procedure parallelogram(x1, y1, x2, y2: double; para: double_ptr);
+
+    procedure viewport(
+      worldX1, worldY1, worldX2, worldY2,
+      screenX1, screenY1, screenX2, screenY2: double;
+      opt: ViewportOption = XMidYMid);
+
+    // Basic Shapes
+    procedure line(const x1, y1, x2, y2: double; AFixAlignment: boolean = false);
+    procedure triangle(x1, y1, x2, y2, x3, y3: double);
+    procedure rectangle(const x1, y1, x2, y2: double; AFixAlignment: boolean = false);
+
+    procedure roundedRect(x1, y1, x2, y2, r: double); overload;
+    procedure roundedRect(x1, y1, x2, y2, rx, ry: double); overload;
+    procedure roundedRect(
+      x1, y1, x2, y2,
+      rxBottom, ryBottom,
+      rxTop, ryTop: double); overload;
+
+    procedure ellipse(cx, cy, rx, ry: double);
+
+    procedure arc(cx, cy, rx, ry, start, sweep: double);
+    procedure star(cx, cy, r1, r2, startAngle: double; numRays: int);
+
+    procedure curve(x1, y1, x2, y2, x3, y3: double); overload;
+    procedure curve(x1, y1, x2, y2, x3, y3, x4, y4: double); overload;
+
+    procedure polygon(xy: double_ptr; numPoints: int);
+    procedure polyline(xy: double_ptr; numPoints: int);
+
+    // Text
+    procedure flipText(flip: boolean);
+
+    procedure font(
+      fileName: char_ptr; height: double;
+      bold: boolean = false;
+      italic: boolean = false;
+      ch: FontCacheType = VectorFontCache;
+      angle: double = 0.0);
+
+    function fontHeight: double;
+
+    procedure textAlignment(alignX, alignY: TextAlignment);
+
+    function textHints: boolean; overload;
+    procedure textHints(hints: boolean); overload;
+    function textWidth(str: AnsiString): double;
+
+    procedure text(
+      x, y: double; str: AnsiString;
+      roundOff: boolean = false;
+      ddx: double = 0.0;
+      ddy: double = 0.0);
+
+    // Path commands
+    procedure resetPath;
+
+    procedure moveTo(x, y: double);
+    procedure moveRel(dx, dy: double);
+
+    procedure lineTo(x, y: double);
+    procedure lineRel(dx, dy: double);
+
+    procedure horLineTo(x: double);
+    procedure horLineRel(dx: double);
+
+    procedure verLineTo(y: double);
+    procedure verLineRel(dy: double);
+
+    procedure arcTo(
+      rx, ry, angle: double;
+      largeArcFlag, sweepFlag: boolean;
+      x, y: double);
+
+    procedure arcRel(
+      rx, ry, angle: double;
+      largeArcFlag, sweepFlag: boolean;
+      dx, dy: double);
+
+    procedure quadricCurveTo(xCtrl, yCtrl, xTo, yTo: double); overload;
+    procedure quadricCurveRel(dxCtrl, dyCtrl, dxTo, dyTo: double); overload;
+    procedure quadricCurveTo(xTo, yTo: double); overload;
+    procedure quadricCurveRel(dxTo, dyTo: double); overload;
+
+    procedure cubicCurveTo(xCtrl1, yCtrl1, xCtrl2, yCtrl2, xTo, yTo: double); overload;
+    procedure cubicCurveRel(dxCtrl1, dyCtrl1, dxCtrl2, dyCtrl2, dxTo, dyTo: double); overload;
+    procedure cubicCurveTo(xCtrl2, yCtrl2, xTo, yTo: double); overload;
+    procedure cubicCurveRel(xCtrl2, yCtrl2, xTo, yTo: double); overload;
+
+    procedure addEllipse(cx, cy, rx, ry: double; dir: Direction);
+    procedure closePolygon;
+
+    procedure drawPath(flag: DrawPathFlag = FillAndStroke);
+
+    procedure drawPathNoTransform(flag: DrawPathFlag = FillAndStroke);
+
+    // Image Transformations
+    procedure imageFilter(f: ImageFilter_); overload;
+    function imageFilter: ImageFilter_; overload;
+
+    procedure imageResample(f: ImageResample_); overload;
+    function imageResample: ImageResample_; overload;
+
+    procedure transformImage(
+      img: Image_ptr;
+      imgX1, imgY1, imgX2, imgY2: int;
+      dstX1, dstY1, dstX2, dstY2: double); overload;
+
+    procedure transformImage(
+      img: Image_ptr;
+      dstX1, dstY1, dstX2, dstY2: double); overload;
+
+    procedure transformImage(
+      img: Image_ptr;
+      imgX1, imgY1, imgX2, imgY2: int;
+      parallelogram_: double_ptr); overload;
+
+    procedure transformImage(img: Image_ptr; parallelogram_: double_ptr); overload;
+
+    procedure transformImagePath(
+      img: Image_ptr;
+      imgX1, imgY1, imgX2, imgY2: int;
+      dstX1, dstY1, dstX2, dstY2: double); overload;
+
+    procedure transformImagePath(
+      img: Image_ptr;
+      dstX1, dstY1, dstX2, dstY2: double); overload;
+
+    procedure transformImagePath(
+      img: Image_ptr;
+      imgX1, imgY1, imgX2, imgY2: int;
+      parallelogram_: double_ptr); overload;
+
+    procedure transformImagePath(img: Image_ptr; parallelogram_: double_ptr); overload;
+    procedure Blur(rx, ry: unsigned);
+
+    // Image Blending (no transformations available)
+    procedure blendImage(
+      img: Image_ptr;
+      imgX1, imgY1, imgX2, imgY2: int;
+      dstX, dstY: double; alpha: unsigned = 255); overload;
+
+    procedure blendImage(img: Image_ptr; dstX, dstY: double; alpha: unsigned = 255); overload;
+
+    // Copy image directly, together with alpha-channel
+    procedure copyImage(
+      img: Image_ptr;
+      imgX1, imgY1, imgX2, imgY2: int;
+      dstX, dstY: double); overload;
+
+    procedure copyImage(img: Image_ptr; dstX, dstY: double); overload;
+
+  private
+    procedure render(fillColor_: boolean); overload;
+    procedure render(ras: FontRasterizer_ptr; sl: FontScanline_ptr); overload;
+
+    procedure addLine(x1, y1, x2, y2: double);
+    procedure updateRasterizerGamma;
+    procedure renderImage(
+      img: Image_ptr;
+      x1, y1, x2, y2: int;
+      parl: double_ptr);
+
+  end;
+
+  SpanConvImageBlend_ptr = ^SpanConvImageBlend;
+  SpanConvImageBlend = object(span_convertor)
+  private
+    m_mode: BlendMode_;
+    m_color: Color;
+    m_pixel: pixel_formats_ptr; // m_pixFormatCompPre
+
+  public
+    constructor Construct(m: BlendMode_; c: Color; p: pixel_formats_ptr);
+
+    procedure convert(span: aggclr_ptr; x, y: int; len: unsigned); virtual;
+
+  end;
+
+  { GLOBAL PROCEDURES }
+  // Auxiliary
+
+function pi: double;
+  function deg2Rad(v: double): double;
+    function rad2Deg(v: double): double;
+
+      function operator_is_equal(c1, c2: Color_ptr): boolean;
+        function operator_is_not_equal(c1, c2: Color_ptr): boolean;
+
+          procedure Agg2DRenderer_render(
+            gr: Agg2D_ptr;
+            renBase: renderer_base_ptr;
+            renSolid: renderer_scanline_aa_solid_ptr;
+            fillColor_: boolean); overload;
+
+            procedure Agg2DRenderer_render(
+              gr: Agg2D_ptr;
+              renBase: renderer_base_ptr;
+              renSolid: renderer_scanline_aa_solid_ptr;
+              ras: gray8_adaptor_type_ptr;
+              sl: gray8_scanline_type_ptr); overload;
+
+              procedure Agg2DRenderer_renderImage(
+                gr: Agg2D_ptr;
+                img: Image_ptr;
+                renBase: renderer_base_ptr;
+                interpolator: span_interpolator_linear_ptr);
+
+                function Agg2DUsesFreeType: boolean;
+                  function Agg2DUsesWin32TrueType: boolean;
