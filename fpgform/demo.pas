@@ -18,13 +18,15 @@ type
   protected
     procedure HandlePaint; override;
   public
-    constructor Create(acom: tcomponent); override;
+    constructor Create(AComp: TComponent); override;
     procedure DoAggPainting;
   end;
 
   TfpgForm1 = class(TfpgForm)
     wg: TFpgWidget1;
     procedure AfterCreate; override;
+  protected
+    procedure HandleKeyPress(var KeyCode: word; var ShiftState: TShiftState; var Consumed: boolean); override;
   end;
 
 const
@@ -34,27 +36,44 @@ const
   CImgTop    = CImgLeft;
 
 procedure TFpgWidget1.DoAggPainting;
+const
+{$IFDEF Unix}
+  //CFont = 'arial.ttf';
+  CFont = '../Nougat-ExtraBlack.ttf';
+{$ELSE}
+  CFont = 'Arial';
+{$ENDIF}
 var
-  ac: tagg2d;
+  ac: TAgg2D;
+  c1, c2: TAggColor;
 begin
-  ac := tagg2d.Create(self);
+  ac := TAgg2D.Create(self);
   if ac.Attach(img, FALSE) then
   begin
     ac.ClearAll(255, 255, 255);
     ac.LineColor($00, $00, $FF);
     ac.LineWidth(3);
-
-    ac.Line(0, 0, 50, 50);
-    ac.Line(50, 50, 100, 0);
-    ac.Line(100, 0, 150, 50);
+    
+    //ac.FillColor($FF, $00, $FF);
+    c1.Construct($FF, $00, $FF, $FF);
+    c2.Construct($FF, $00, $FF, $00);
+    ac.FillLinearGradient(0, 0, CImgWidth, 0, c1, c2);
+    
+    ac.Font(CFont, 40);
+    ac.TextAlignment(AGG_AlignCenter, AGG_AlignCenter);
+    ac.Text(CImgWidth div 2, CImgHeight div 2, 'AGGPas');
+    
+    ac.NoLine;
+    ac.FillColor($00, $00, $FF, $80);
+    ac.Arc(CImgWidth div 3, CImgHeight div 2, CImgWidth div 4, CImgHeight div 4, Deg2Rad(45), Deg2Rad(270));
   end;
   img.UpdateImage;
   ac.Free;
 end;
 
-constructor TFpgWidget1.Create(acom: tcomponent);
+constructor TFpgWidget1.Create(AComp: TComponent);
 begin
-  inherited Create(acom);
+  inherited Create(AComp);
   img := TFpgImage.Create;
   img.AllocateImage(32, CImgWidth, CImgHeight);
 end;
@@ -70,8 +89,21 @@ procedure TfpgForm1.AfterCreate;
 begin
   Width := CImgWidth + 2 * CImgLeft;
   Height := CImgHeight + 2 * CImgTop;
+  WindowTitle := 'TFpgForm & AGGPas';
+  
   wg := TFpgWidget1.Create(self);
   wg.SetPosition(CImgLeft, CImgTop, CImgWidth, CImgHeight);
+end;
+
+procedure TfpgForm1.HandleKeyPress(var KeyCode: word; var ShiftState: TShiftState; var Consumed: boolean);
+begin
+  if KeyCode = keyEscape then
+  begin
+    Consumed := TRUE;
+    Close;
+  end;
+  
+  inherited HandleKeyPress(KeyCode, ShiftState, Consumed);
 end;
 
 var

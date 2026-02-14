@@ -45,6 +45,8 @@ make
 
 You will have to edit *Makefile* and provide a path to your AGGPas units.
 
-## AggExample unit
+## Credits
 
 The *AggExample* unit is derived from [Agg2DConsole.dpr](https://github.com/graemeg/fpGUI/blob/develop/extras/aggpas/agg-demos/Agg2DConsole.dpr).
+
+The examples uses [Nougat font](https://www.dafont.com/fr/nougat.font) by Dieter Steffmann.

@@ -45,6 +45,8 @@ make
 
 Vous devrez modifier dans *Makefile* le chemin vers les unités AGGPas.
 
-## Unité AggExample
+## Crédits
 
 L'unité *AggExample* est dérivée du programme [Agg2DConsole.dpr](https://github.com/graemeg/fpGUI/blob/develop/extras/aggpas/agg-demos/Agg2DConsole.dpr).
+
+Les exemples utilisent la police [Nougat](https://www.dafont.com/fr/nougat.font) de Dieter Steffmann.
