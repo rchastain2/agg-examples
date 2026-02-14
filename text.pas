@@ -28,12 +28,12 @@ begin
   
   // Text
   agg^.NoLine;
-  //agg^.LineWidth(1);
-  //agg^.LineColor(0, 0, 128);
-  //agg^.FillColor(0, 0, 128);
+  //agg^.lineWidth(1);
+  //agg^.lineColor(0, 0, 128);
+  //agg^.fillColor(0, 0, 128);
   c1.Construct(0, 0, 255, 255);
   c2.Construct(255, 0, 0, 255);
-  agg^.FillLinearGradient(20, 20, 100, 20, c1, c2);
+  agg^.fillLinearGradient(20, 20, 100, 20, c1, c2);
   agg^.Font(CFont, 28, false, false, VectorFontCache, 0);//Deg2Rad(45));
   agg^.Text(20, 20, 'AGGPas');
   

@@ -7,10 +7,6 @@ uses
   agg_2D,
   agg_basics;
 
-{
-  procedure arc(cx, cy, rx, ry, start, sweep: double);
-}
-
 type
   TAggExample1 = class(TAggExample)
   protected
@@ -18,21 +14,15 @@ type
   end;
 
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
-var
-  c1, c2: Color;
 begin
   agg^.clearAll(0, 0, 0, 0);
   
-  agg^.lineCap(CapRound);
-  agg^.lineWidth(5);
-  agg^.lineColor(0, 0, 255);
+  //agg^.lineColor(0, 0, 255, 255);
+  //agg^.lineWidth(1);
+  agg^.noLine;
   
-  //agg^.fillColor(255, 0, 0, 255);
-  c1.Construct(255, 0, 0, 255);
-  c2.Construct(255, 0, 0, 0);
-  agg^.fillLinearGradient(0, 0, FImageW, FImageH, c1, c2);
-  
-  agg^.Arc(FImageW div 2, FImageH div 2, FImageW div 3, FImageH div 3, Deg2Rad(90), Deg2Rad(360));
+  agg^.fillColor(255, 0, 0);
+  agg^.triangle(10, 10, 100, 190, 190, 10);
 end;
 
 var

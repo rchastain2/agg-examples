@@ -27,9 +27,9 @@ var
 begin
   agg^.clearAll(0, 0, 0, 0);
   
-  agg^.LineCap(CapRound);
-  agg^.LineWidth(3);
-  agg^.LineColor(0, 0, 255);
+  agg^.lineCap(CapRound);
+  agg^.lineWidth(3);
+  agg^.lineColor(0, 0, 255);
   
   //agg^.fillColor(255, 0, 0, 255);
   agg^.blendMode(BlendAlpha);

@@ -1,1 +1,7 @@
-lineCap 
+clearAll
+fillColor
+fillLinearGradient
+lineCap
+lineColor
+lineWidth
+roundedRect

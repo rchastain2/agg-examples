@@ -359,10 +359,7 @@ type
 
     procedure roundedRect(x1, y1, x2, y2, r: double); overload;
     procedure roundedRect(x1, y1, x2, y2, rx, ry: double); overload;
-    procedure roundedRect(
-      x1, y1, x2, y2,
-      rxBottom, ryBottom,
-      rxTop, ryTop: double); overload;
+    procedure roundedRect(x1, y1, x2, y2, rxBottom, ryBottom, rxTop, ryTop: double); overload;
 
     procedure ellipse(cx, cy, rx, ry: double);
 

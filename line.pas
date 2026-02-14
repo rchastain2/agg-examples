@@ -20,9 +20,9 @@ begin
   agg^.clearAll(0, 0, 0, 0);
 
   // Star
-  agg^.LineCap(CapRound);
-  agg^.LineWidth(8);
-  agg^.LineColor(0, 0, 255, 255);
+  agg^.lineCap(CapRound);
+  agg^.lineWidth(8);
+  agg^.lineColor(0, 0, 255, 255);
   agg^.line(FImageW div 4, FImageH div 4, 3 * FImageW div 4, 3 * FImageH div 4);
 end;
 

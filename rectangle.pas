@@ -25,7 +25,7 @@ begin
   //agg^.fillColor(255, 0, 255, 255);
   c1.Construct(0, 0, 255, 200);
   c2.Construct(0, 0, 255, 50);
-  agg^.FillLinearGradient(100, 100, 150, 150, c1, c2);
+  agg^.fillLinearGradient(100, 100, 150, 150, c1, c2);
   agg^.rectangle(100, 100, 190, 190);
 end;
 
