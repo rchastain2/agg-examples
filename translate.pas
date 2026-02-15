@@ -20,15 +20,10 @@ const
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   agg^.clearAll(0, 0, 0, 0);
-  agg^.lineCap(CapRound);
-  agg^.lineColor(0, 0, 255, 255);
- 
-  agg^.translate(0.5, 0.5);
-  agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);
-  agg^.lineWidth(0.05); // in world coordinates!
-  { https://forum.lazarus.freepascal.org/index.php/topic,73489.msg576462.html#msg576462 }
   
-  agg^.ellipse(0, 0, 0.25, 0.25);
+  agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);
+  
+  agg^.ellipse(0, 0, SURFACE_WIDTH div 4, SURFACE_HEIGHT div 4);
 end;
 
 var

@@ -14,6 +14,7 @@ AGGEXT := $(FPGUI)/extras/aggpas
 #LAZARUS := ~/Documents/sources/lazarus
 #AGGPAS := $(LAZARUS)/components/aggpas/src
 
+PC := fpc
 PFLAGS := -Mdelphi
 PFLAGS += -ghl
 
@@ -35,7 +36,7 @@ else
 	@[ -d units ] || mkdir -p units
 endif
 	@rm -fv $@
-	@fpc $< $(PFLAGS)
+	@$(PC) $< $(PFLAGS)
 	@./$@
 
 clean:

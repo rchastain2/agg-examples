@@ -24,9 +24,6 @@ begin
   agg^.lineWidth(2);
   agg^.lineColor(0, 0, 255, 255);
   
-  //agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);
-  //agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);
-  
   agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);
   agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);
   { https://forum.lazarus.freepascal.org/index.php/topic,73489.msg576462.html#msg576462 }
