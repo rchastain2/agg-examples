@@ -34,7 +34,6 @@ ifeq ($(OS),Windows_NT)
 else
 	@[ -d units ] || mkdir -p units
 endif
-	@[ -d units ] || mkdir -p units
 	@rm -fv $@
 	@fpc $< $(PFLAGS)
 	@./$@
