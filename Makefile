@@ -24,15 +24,18 @@ PFLAGS += -Fu$(AGGPAS)/ctrl
 PFLAGS += -Fu$(AGGPAS)/util
 PFLAGS += -Fu$(AGGEXT)
 
+PFLAGS += -FUunits
+
 all: $(TARGETS)
 
 %: %.pas
+	@[ -d units ] || mkdir -p units
 	@rm -fv $@
 	@fpc $< $(PFLAGS)
 	@./$@
 
 clean:
-	@rm -fv *.o *.ppu
+	@rm -fv units/*.o units/*.ppu
 
 distclean: clean
 	@rm -fv $(TARGETS)
