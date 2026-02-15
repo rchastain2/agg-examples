@@ -29,6 +29,11 @@ PFLAGS += -FUunits
 all: $(TARGETS)
 
 %: %.pas
+ifeq ($(OS),Windows_NT)
+	@if not exist units mkdir units
+else
+	@[ -d units ] || mkdir -p units
+endif
 	@[ -d units ] || mkdir -p units
 	@rm -fv $@
 	@fpc $< $(PFLAGS)
