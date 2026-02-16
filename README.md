@@ -53,6 +53,11 @@ Compile all examples:
 make
 ```
 
+Compile all examples using LCL:
+```
+make LCL=1
+```
+
 You will have to edit *Makefile* and provide a path to your AGGPas units.
 
 ## Credits
