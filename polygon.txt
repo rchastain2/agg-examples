@@ -1,0 +1,16 @@
+    var
+      Len, I: Integer;
+      poly: array of double;
+    begin
+      Len := Length(aPts);
+
+      SetLength(poly, Len * 2);
+      for I := 0 to Len - 1 do
+      begin
+        poly[2 * I] := aPts[I].X;
+        poly[2 * I + 1] := aPts[I].Y;
+      end;
+
+      fVG.fillColor(R, G, B);
+      fVG.noLine;
+      fVG.polygon(@poly[0], 4);
