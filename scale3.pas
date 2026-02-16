@@ -25,7 +25,7 @@ begin
  
   agg^.translate(0.5, 0.5);
   agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);
-  agg^.lineWidth(0.05); // in world coordinates!
+  agg^.lineWidth(0.05);  // in world coordinates!
   { https://forum.lazarus.freepascal.org/index.php/topic,73489.msg576462.html#msg576462 }
   
   agg^.ellipse(0, 0, 0.25, 0.25);

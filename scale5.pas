@@ -29,8 +29,8 @@ begin
     Scaling with negative factors generates reflections. That can be utilized to create a mirror-like effects. (One additional translation must be involved to get the effect.)
   }
   agg^.clearAll(0, 0, 0, 0);
-  //agg^.ClearAll(255, 255, 255);
-  agg^.NoFill;
+  //agg^.clearAll(255, 255, 255);
+  agg^.noFill;
 
   // First triangle
   agg^.Triangle(100, 20, 20, 100, 180, 100);
@@ -40,7 +40,7 @@ begin
   agg^.Translate(0, 210);
 
   // The same triangle reflected in a new coordinates
-  agg^.LineColor($FF, $00, $00);
+  agg^.lineColor($FF, $00, $00);
   agg^.Triangle(100, 20, 20, 100, 180, 100);
 end;
 

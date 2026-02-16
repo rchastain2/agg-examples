@@ -26,18 +26,18 @@ const
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   agg^.clearAll(0, 0, 0, 0);
-  //agg^.ClearAll(255, 255, 255);
-  agg^.NoFill;
+  //agg^.clearAll(255, 255, 255);
+  agg^.noFill;
 
   // First rectangle
-  agg^.Rectangle(30, 30, 130, 130);
+  agg^.rectangle(30, 30, 130, 130);
 
   // Scale 40% on X axis and 20% on Y axis
   agg^.Scale(1.4, 1.2);
 
   // The same rectangle in a new coordinates
-  agg^.LineColor($FF, $00, $00);
-  agg^.Rectangle(30, 40, 130, 130);
+  agg^.lineColor($FF, $00, $00);
+  agg^.rectangle(30, 40, 130, 130);
 end;
 
 var

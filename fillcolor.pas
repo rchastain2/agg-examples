@@ -8,7 +8,7 @@ uses
   agg_basics;
 
 {
-  https://www.crossgl.com/aggpas/documentation/index.html#FillColor
+  https://www.crossgl.com/aggpas/documentation/index.html#fillColor
 }
 
 type
@@ -22,16 +22,16 @@ var
   x1, y1, x2, y2: double;
 begin
   agg^.clearAll(0, 0, 0, 0);
-  //agg^.ClearAll(255, 255, 255);
+  //agg^.clearAll(255, 255, 255);
 
   // Changing fill color to HTML color Gold #FFD700
-  agg^.FillColor($FF, $D7, $00);
-  agg^.Rectangle(30, 30, 180, 80);
+  agg^.fillColor($FF, $D7, $00);
+  agg^.rectangle(30, 30, 180, 80);
 
   // Adding Alpha Transparency to previous fill color
   agg^.Translate(0, 80);
-  agg^.FillColor($FF, $D7, $00, 128);
-  agg^.Rectangle(30, 30, 180, 80);
+  agg^.fillColor($FF, $D7, $00, 128);
+  agg^.rectangle(30, 30, 180, 80);
 end;
 
 var

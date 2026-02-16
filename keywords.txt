@@ -8,4 +8,7 @@ lineColor
 lineJoin
 lineWidth
 noLine
+noFill
 roundedRect
+rectangle
+rotate

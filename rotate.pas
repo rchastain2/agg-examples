@@ -20,18 +20,18 @@ const
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   agg^.clearAll(0, 0, 0, 0);
-  //agg^.ClearAll(255, 255, 255);
-  agg^.NoFill;
+  //agg^.clearAll(255, 255, 255);
+  agg^.noFill;
 
   // First rectangle
-  agg^.Rectangle(70, 40, 170, 140);
+  agg^.rectangle(70, 40, 170, 140);
 
   // Rotate by 15 degrees
-  agg^.Rotate(Deg2Rad(15));
+  agg^.rotate(Deg2Rad(15));
 
   // The same rectangle in a new coordinates
-  agg^.LineColor($FF, $00, $00);
-  agg^.Rectangle(70, 40, 170, 140);
+  agg^.lineColor($FF, $00, $00);
+  agg^.rectangle(70, 40, 170, 140);
 end;
 
 var

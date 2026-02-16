@@ -23,13 +23,13 @@ var
   af: Transformations_;
 begin
   agg^.clearAll(0, 0, 0, 0);
-  //agg^.ClearAll(255, 255, 255);
-  agg^.NoLine;
+  //agg^.clearAll(255, 255, 255);
+  agg^.noLine;
 
   // Red Arrow
-  agg^.FillColor(255, 0, 0, 128);
+  agg^.fillColor(255, 0, 0, 128);
   agg^.Triangle(100, 20, 40, 100, 160, 100);
-  agg^.Rectangle(70, 100, 130, 170);
+  agg^.rectangle(70, 100, 130, 170);
 
   // Coordinates will be reflected along line
   // defined as from 0:0 to 90:85
@@ -51,9 +51,9 @@ begin
   agg^.Transformations(@af);
 
   // Blue Arrow (same as Red)
-  agg^.FillColor(0, 0, 255, 128);
+  agg^.fillColor(0, 0, 255, 128);
   agg^.Triangle(100, 20, 40, 100, 160, 100);
-  agg^.Rectangle(70, 100, 130, 170);
+  agg^.rectangle(70, 100, 130, 170);
 end;
 
 var

@@ -20,29 +20,16 @@ const
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   agg^.clearAll(0, 0, 0, 0);
-  //agg^.clearAll(255, 255, 255);
-
-  // Bold line & drawing path
-  agg^.lineWidth(25);
-
-  agg^.ResetPath;
-  agg^.MoveTo(30, 90);
-  agg^.LineTo(90, 30);
-  agg^.LineTo(150, 90);
-
-  // Default AGG_JoinRound
-  agg^.Translate(10, -10);
-  agg^.DrawPath(StrokeOnly);
-
-  // Change to AGG_JoinMiter
-  agg^.lineJoin(JoinMiter);
-  agg^.Translate(0, 50);
-  agg^.DrawPath(StrokeOnly);
-
-  // Change to AGG_JoinBevel
-  agg^.lineJoin(JoinBevel);
-  agg^.Translate(0, 50);
-  agg^.DrawPath(StrokeOnly);
+  agg^.lineCap(CapRound);
+  agg^.lineColor(0, 0, 255, 255);
+ 
+  agg^.rotate(PI / 4);
+  agg^.translate(0.5, 0.5);
+  agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);
+  agg^.lineWidth(0.05);  // in world coordinates!
+  { https://forum.lazarus.freepascal.org/index.php/topic,73489.msg576511.html#msg576511 }
+  
+  agg^.rectangle(-0.25, -0.25, 0.25, 0.25);
 end;
 
 var
