@@ -2,6 +2,8 @@ arial.ttf
 
 # Exemples à finir
 cardioid.*
+clock.*
+fpgclock/
 polyline.*
 
 beauty.lua

@@ -30,9 +30,9 @@ begin
   //agg^.fillColor(255, 0, 0, 255);
   c1.Construct(255, 0, 0, 255);
   c2.Construct(255, 0, 0, 0);
-  agg^.fillLinearGradient(0, 0, FImageW, FImageH, c1, c2);
+  agg^.fillLinearGradient(0, 0, Width, Height, c1, c2);
   
-  agg^.arc(FImageW div 2, FImageH div 2, FImageW div 3, FImageH div 3, Deg2Rad(90), Deg2Rad(360));
+  agg^.arc(Width div 2, Height div 2, Width div 3, Height div 3, Deg2Rad(90), Deg2Rad(360));
 end;
 
 var

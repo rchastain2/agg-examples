@@ -22,7 +22,7 @@ type
     procedure DoAggPainting;
   end;
 
-  TfpgForm1 = class(TfpgForm)
+  TfpgForm1 = class(TFpgForm)
     wg: TFpgWidget1;
     procedure AfterCreate; override;
   protected

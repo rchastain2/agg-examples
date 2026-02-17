@@ -11,7 +11,7 @@ uses
 type
   TAggExample = class
   public
-    constructor Create(AImageW, AImageH: integer; AFileName: string);
+    constructor Create(AWidth, AHeight: integer; AFileName: string);
     destructor Destroy; override;
     procedure DrawImage;
     procedure SaveToPng;
@@ -19,8 +19,11 @@ type
     FFileName: string;
     FData: array of int8;
   protected
-    FImageW, FImageH: integer;
+    FWidth, FHeight: integer;
     procedure Draw(agg: Agg2D_ptr); virtual;
+  public
+    property Width: integer read FWidth;
+    property Height: integer read FHeight;
   end;
   
 implementation
@@ -32,13 +35,13 @@ uses
 const
   CColorW = 4;
 
-constructor TAggExample.Create(AImageW, AImageH: integer; AFileName: string);
+constructor TAggExample.Create(AWidth, AHeight: integer; AFileName: string);
 begin
-  FImageW := AImageW;
-  FImageH := AImageH;
+  FWidth := AWidth;
+  FHeight := AHeight;
   FFileName := AFileName;
   
-  SetLength(FData, FImageW * FImageH * CColorW);
+  SetLength(FData, FWidth * FHeight * CColorW);
 end;
 
 destructor TAggExample.Destroy;
@@ -51,7 +54,7 @@ var
   agg: Agg2D_ptr;
 begin
   New(agg, Construct);
-  agg^.attach(@(FData[0]), FImageW, FImageH, FImageW * CColorW);
+  agg^.attach(@(FData[0]), FWidth, FHeight, FWidth * CColorW);
   Draw(agg);
   Dispose(agg, Destruct);
 end;
@@ -72,17 +75,17 @@ var
   var
     y1: integer;
   begin
-    y1 := FImageH - y - 1;
+    y1 := FHeight - y - 1;
     result :=
-      Word(FData[x * CColorW + y1 * FImageW * CColorW + ADelta] shl 8) or
+      Word(FData[x * CColorW + y1 * FWidth * CColorW + ADelta] shl 8) or
       Word(128);
   end;
   
 begin
-  img := TFPMemoryImage.create(FImageW, FImageH);
+  img := TFPMemoryImage.create(FWidth, FHeight);
   
-  for x := 0 to FImageW - 1 do
-    for y := 0 to FImageH - 1 do
+  for x := 0 to FWidth - 1 do
+    for y := 0 to FHeight - 1 do
     begin
       c.red   := getBufItemAsWord(2);
       c.green := getBufItemAsWord(1);
