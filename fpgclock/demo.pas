@@ -15,6 +15,31 @@ uses
   
   Agg2D;
 
+(* ========================================================================== *)
+
+procedure ComputeAngles(out AHourAngle, AMinuteAngle, ASecondAngle: double);
+const
+  CNoonAngle = 3 * PI / 2;
+var
+  LHour, LMinute, LSecond, LMSecond: word;
+begin
+  DecodeTime(Time, LHour, LMinute, LSecond, LMSecond);
+  (*
+  AHourAngle   := LHour   * PI / 6  + CNoonAngle + LMinute * PI / 360;
+  AMinuteAngle := LMinute * PI / 30 + CNoonAngle + LSecond * PI / 1800;
+  ASecondAngle := LSecond * PI / 30 + CNoonAngle;
+  *)
+  ASecondAngle := LSecond * PI / 30;
+  AMinuteAngle := LMinute * PI / 30 + ASecondAngle / 60;
+  AHourAngle   := LHour   * PI /  6 + AMinuteAngle / 12;
+  
+  ASecondAngle := CNoonAngle + ASecondAngle;
+  AMinuteAngle := CNoonAngle + AMinuteAngle;
+  AHourAngle   := CNoonAngle + AHourAngle;
+end;
+
+(* ========================================================================== *)
+
 type
   TClockWidget = class(TFpgWidget)
   private
@@ -57,20 +82,16 @@ const
   CRadius2 = 6 * CImgWidth div 16;
   CRadius3 = 5 * CImgWidth div 16;
   CRadius4 = 4 * CImgWidth div 16;
-  CLineWidth = 8;
+  CLineWidth = 10;
   CPointWidth: array[boolean] of integer = (CLineWidth div 2 + 1, CLineWidth div 2 + 2);
 var
-  Hour, Second, Minute, MSecond: word;
-  HourAngle, MinuteAngle, SecondAngle: double;
+  LHourAngle, LMinuteAngle, LSecondAngle: double;
   LAgg: TAgg2D;
   LLightBlue, LDarkBlue: TAggColor;
   LPointWidth: integer;
+  LHour: integer;
 begin
-  DecodeTime(Time, Hour, Minute, Second, MSecond);
-  
-  HourAngle   := Hour   * PI / 6  + 3 * PI / 2 + Minute * PI / 360;
-  MinuteAngle := Minute * PI / 30 + 3 * PI / 2 + Second * PI / 1800;
-  SecondAngle := Second * PI / 30 + 3 * PI / 2;
+  ComputeAngles(LHourAngle, LMinuteAngle, LSecondAngle);
   
   LAgg := TAgg2D.Create(self);
   if LAgg.Attach(FImage, FALSE) then
@@ -81,27 +102,26 @@ begin
     LAgg.Translate(CImgWidth div 2, CImgHeight div 2);
     LAgg.ClearAll(LLightBlue);
     
-    LAgg.LineWidth(8);
+    LAgg.LineWidth(CLineWidth);
     LAgg.LineColor(LDarkBlue);
     LAgg.FillColor(255, 255, 255);
     LAgg.Ellipse(0, 0, CRadius1, CRadius1);
     
     LAgg.NoLine;
     LAgg.FillColor(LDarkBlue);
-    for Hour := 0 to 11 do
+    for LHour := 0 to 11 do
     begin
-      LPointWidth := CPointWidth[Hour mod 3 = 0];
-      LAgg.Ellipse(CRadius2 * Cos(Hour * PI / 6), CRadius2 * Sin(Hour * PI / 6), LPointWidth, LPointWidth);
+      LPointWidth := CPointWidth[LHour mod 3 = 0];
+      LAgg.Ellipse(CRadius2 * Cos(LHour * PI / 6), CRadius2 * Sin(LHour * PI / 6), LPointWidth, LPointWidth);
     end;
     
-    LAgg.LineWidth(10);
+    LAgg.LineWidth(CLineWidth);
     LAgg.LineColor(LDarkBlue);
-    LAgg.Line(0, 0, CRadius4 * Cos(HourAngle),   CRadius4 * Sin(HourAngle));
-    LAgg.LineWidth(8);
-    LAgg.Line(0, 0, CRadius3 * Cos(MinuteAngle), CRadius3 * Sin(MinuteAngle));
+    LAgg.Line(0, 0, CRadius4 * Cos(LHourAngle),   CRadius4 * Sin(LHourAngle));
+    LAgg.Line(0, 0, CRadius3 * Cos(LMinuteAngle), CRadius3 * Sin(LMinuteAngle));
     
     LAgg.NoLine;
-    LAgg.Font(CFont, 12);
+    LAgg.Font(CFont, 18);
     LAgg.TextAlignment(AGG_AlignRight, AGG_AlignBottom);
     LAgg.Text(CImgWidth div 2 - 12, CImgHeight div 2 - 12, 'AGGPas', true, 0.0, 0.0);
   end;
