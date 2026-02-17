@@ -68,9 +68,9 @@ var
 begin
   DecodeTime(Time, Hour, Minute, Second, MSecond);
   
-  MinuteAngle := {PI / 2 - }Minute * PI / 30 + 3 * PI / 2;
-  HourAngle   := {PI / 2 - }Hour   * PI / 6  + 3 * PI / 2 + Minute * PI / 360;
-  SecondAngle := {PI / 2 - }Second * PI / 30 + 3 * PI / 2;
+  HourAngle   := Hour   * PI / 6  + 3 * PI / 2 + Minute * PI / 360;
+  MinuteAngle := Minute * PI / 30 + 3 * PI / 2 + Second * PI / 1800;
+  SecondAngle := Second * PI / 30 + 3 * PI / 2;
   
   LAgg := TAgg2D.Create(self);
   if LAgg.Attach(FImage, FALSE) then
@@ -126,7 +126,7 @@ end;
 constructor TClockForm.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  LTimer := TfpgTimer.Create(300);
+  LTimer := TfpgTimer.Create(1000);
   LTimer.OnTimer := @TimerFired;
   LTimer.Enabled := TRUE;
 end;
