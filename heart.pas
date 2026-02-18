@@ -35,14 +35,18 @@ procedure TAggExample1.Draw(agg: Agg2D_ptr);
   end;
 
 begin
-  agg^.clearAll(0, 0, 0, 0);
-  agg^.lineColor(255, 0, 0);
-  agg^.lineWidth(5);
-  
   agg^.translate(-Width div 2, -Height div 2);
-  agg^.rotate(Deg2Rad(180));
+  agg^.rotate(PI);
   agg^.translate(Width div 2, Height div 2);
   
+  agg^.clearAll(0, 0, 0, 0);
+  
+  agg^.lineColor(255, 0, 0, 127);
+  agg^.lineWidth(10);
+  DrawHeart(Width / 2, Height / 2, Width / 3, 0);
+  
+  agg^.lineColor(255, 0, 0);
+  agg^.lineWidth(5);
   DrawHeart(Width / 2, Height / 2, Width / 3, 0);
 end;
 

@@ -29,8 +29,10 @@ var
   LAngles: TClockAngles;
   LHour: integer;
 begin
-  LLight.Construct(35, 151, 212); // #2397D4
-  LDark.Construct(38, 47, 69); // #262F45
+  //LLight.Construct(35, 151, 212); // #2397D4
+  //LDark.Construct(38, 47, 69); // #262F45
+  LLight.Construct(255, 0, 0, 127);
+  LDark.Construct(0, 0, 255);
   LWhite.Construct(255, 255, 255);
   
   agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);

@@ -14,35 +14,32 @@ type
   end;
 
 const
-  SURFACE_WIDTH = 480;
-  SURFACE_HEIGHT = 480;
+  SURFACE_WIDTH = 200;
+  SURFACE_HEIGHT = 200;
 
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   agg^.clearAll(0, 0, 0, 0);
-  //agg^.clearAll(255, 255, 255);
-
-  // Bold line & drawing path
+  agg^.lineColor(0, 0, 255);
   agg^.lineWidth(25);
 
-  agg^.ResetPath;
-  agg^.MoveTo(30, 90);
-  agg^.LineTo(90, 30);
-  agg^.LineTo(150, 90);
+  agg^.resetPath;
+  agg^.moveTo(20, SURFACE_HEIGHT - 20);
+  agg^.lineTo(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);
+  agg^.lineTo(SURFACE_WIDTH - 20, SURFACE_HEIGHT - 20);
 
-  // Default AGG_JoinRound
-  agg^.Translate(10, -10);
-  agg^.DrawPath(StrokeOnly);
+  // Default (AGG_JoinRound)
+  agg^.drawPath(StrokeOnly);
 
   // Change to AGG_JoinMiter
   agg^.lineJoin(JoinMiter);
-  agg^.Translate(0, 50);
-  agg^.DrawPath(StrokeOnly);
+  agg^.translate(0, -40);
+  agg^.drawPath(StrokeOnly);
 
   // Change to AGG_JoinBevel
   agg^.lineJoin(JoinBevel);
-  agg^.Translate(0, 50);
-  agg^.DrawPath(StrokeOnly);
+  agg^.translate(0, -40);
+  agg^.drawPath(StrokeOnly);
 end;
 
 var

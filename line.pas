@@ -33,6 +33,14 @@ begin
   
   agg^.lineCap(CapRound);
   agg^.line(1 * w4, 1 * h4, 3 * w4, 1 * h4);
+  
+  // Default (AGG_JoinRound)
+  
+  // Change to AGG_JoinMiter
+  //agg^.lineJoin(JoinMiter);
+  
+  // Change to AGG_JoinBevel
+  //agg^.lineJoin(JoinBevel);
 end;
 
 var
