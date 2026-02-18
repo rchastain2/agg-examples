@@ -1,5 +1,5 @@
 
-SOURCES := $(filter-out aggexample.pas,$(wildcard *.pas))
+SOURCES := $(filter-out aggexample.pas clockutils.pas,$(wildcard *.pas))
 TARGETS := $(SOURCES:%.pas=%)
 
 ifdef LCL

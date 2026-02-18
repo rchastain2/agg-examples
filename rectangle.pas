@@ -17,16 +17,16 @@ procedure TAggExample1.Draw(agg: Agg2D_ptr);
 var
   c1, c2: Color;
 begin
+  c1.Construct(0, 0, 255);
+  c2.Construct(255, 0, 255, 127);
   agg^.clearAll(0, 0, 0, 0);
-  
-  //agg^.lineColor(0, 0, 255, 255);
-  //agg^.lineWidth(1);
   agg^.noLine;
-  //agg^.fillColor(255, 0, 255, 255);
-  c1.Construct(0, 0, 255, 200);
-  c2.Construct(0, 0, 255, 50);
-  agg^.fillLinearGradient(100, 100, 150, 150, c1, c2);
-  agg^.rectangle(100, 100, 190, 190);
+  
+  agg^.fillColor(c1);
+  agg^.rectangle(  0, 0, 100, 200);
+  
+  agg^.fillLinearGradient(100, 0, 200, 0, c1, c2);
+  agg^.rectangle(100, 0, 200, 200);
 end;
 
 var

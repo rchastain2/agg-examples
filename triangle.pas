@@ -16,13 +16,11 @@ type
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   agg^.clearAll(0, 0, 0, 0);
+  agg^.lineColor(0, 0, 255);
+  agg^.fillColor(255, 0, 0, 127);
+  agg^.lineWidth(5);
   
-  //agg^.lineColor(0, 0, 255, 255);
-  //agg^.lineWidth(1);
-  agg^.noLine;
-  
-  agg^.fillColor(255, 0, 0);
-  agg^.triangle(10, 10, 100, 190, 190, 10);
+  agg^.triangle(10, 10, 10, 190, 190, 100);
 end;
 
 var

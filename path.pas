@@ -31,19 +31,18 @@ type
   end;
 
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
-var
-  c1, c2: Color;
 begin
   agg^.clearAll(0, 0, 0, 0);
-
   agg^.lineCap(CapRound);
-  agg^.lineWidth(3);
+  agg^.lineWidth(5);
   agg^.lineColor(0, 0, 255);
-  agg^.fillColor(255, 0, 0, 255);
+  agg^.fillColor(255, 0, 0, 127);
+  
   agg^.resetPath;
-  agg^.moveTo(10, 10);
-  agg^.lineTo(10, 190);
-  agg^.lineTo(190, 190);
+  agg^.moveTo( 10, 100);
+  agg^.lineTo(100, 190);
+  agg^.lineTo(190, 100);
+  agg^.lineTo(100,  10);
   agg^.closePolygon;
   agg^.drawPath;
 end;
