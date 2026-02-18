@@ -33,8 +33,8 @@ all: $(TARGETS)
 %: %.pas
 ifeq ($(USER),roland)
 	#pcfi $<
-	#lua pcb.lua $<
 endif
+	#lua pcb.lua $<
 ifeq ($(OS),Windows_NT)
 	@if not exist units mkdir units
 else
