@@ -1,10 +1,14 @@
-arial.ttf 
-
 # Exemples à finir
+
 clock.*
 polyline.*
 
-beauty.lua
+# Autres fichiers à ignorer
 
+arial.ttf
+
+*.lua
 *.o
 *.ppu
+
+sample_*.pas

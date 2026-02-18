@@ -32,14 +32,14 @@ begin
   agg^.lineColor(0, 0, 255);
   
   //agg^.fillColor(255, 0, 0, 255);
-  agg^.blendMode(BlendAlpha);
+  //agg^.blendMode(BlendAlpha);
   c1.Construct(255, 255, 255);
   c2.Construct(0, 0, 255);
   c3.Construct(0, 255, 0);
   //agg^.fillRadialGradient(100, 100, 90, c1, c2, c3);
-  agg^.fillRadialGradient(100, 100, 90, c1, c2);
+  agg^.fillRadialGradient(100, 100, 50, c1, c2);
   
-  agg^.ellipse(100, 100, 90, 90);
+  agg^.ellipse(100, 100, 80, 60);
 end;
 
 var
