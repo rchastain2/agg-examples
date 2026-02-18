@@ -1,6 +1,5 @@
 # Exemples à finir
 
-clock.*
 polyline.*
 
 # Autres fichiers à ignorer
@@ -10,5 +9,3 @@ arial.ttf
 *.lua
 *.o
 *.ppu
-
-sample_*.pas

@@ -13,32 +13,9 @@ uses
   fpg_form,
   fpg_widget,
   
-  Agg2D;
-
-(* ========================================================================== *)
-
-procedure ComputeAngles(out AHourAngle, AMinuteAngle, ASecondAngle: double);
-const
-  CNoonAngle = 3 * PI / 2;
-var
-  LHour, LMinute, LSecond, LMSecond: word;
-begin
-  DecodeTime(Time, LHour, LMinute, LSecond, LMSecond);
-  (*
-  AHourAngle   := LHour   * PI / 6  + CNoonAngle + LMinute * PI / 360;
-  AMinuteAngle := LMinute * PI / 30 + CNoonAngle + LSecond * PI / 1800;
-  ASecondAngle := LSecond * PI / 30 + CNoonAngle;
-  *)
-  ASecondAngle := LSecond * PI / 30;
-  AMinuteAngle := LMinute * PI / 30 + ASecondAngle / 60;
-  AHourAngle   := LHour   * PI /  6 + AMinuteAngle / 12;
+  Agg2D,
   
-  ASecondAngle := CNoonAngle + ASecondAngle;
-  AMinuteAngle := CNoonAngle + AMinuteAngle;
-  AHourAngle   := CNoonAngle + AHourAngle;
-end;
-
-(* ========================================================================== *)
+  clockutils;
 
 type
   TClockWidget = class(TFpgWidget)
@@ -85,19 +62,17 @@ const
   CLineWidth = 10;
   CPointWidth: array[boolean] of integer = (CLineWidth div 2 + 1, CLineWidth div 2 + 2);
 var
-  LHourAngle, LMinuteAngle, LSecondAngle: double;
   LAgg: TAgg2D;
   LLightBlue, LDarkBlue: TAggColor;
   LPointWidth: integer;
+  LAngles: TClockAngles;
   LHour: integer;
 begin
-  ComputeAngles(LHourAngle, LMinuteAngle, LSecondAngle);
-  
   LAgg := TAgg2D.Create(self);
   if LAgg.Attach(FImage, FALSE) then
   begin
-    LLightBlue.Construct(35, 151, 212);
-    LDarkBlue.Construct(38, 47, 69);
+    LLightBlue.Construct(35, 151, 212); // #2397D4
+    LDarkBlue.Construct(38, 47, 69); // #262F45
     
     LAgg.Translate(CImgWidth div 2, CImgHeight div 2);
     LAgg.ClearAll(LLightBlue);
@@ -115,10 +90,12 @@ begin
       LAgg.Ellipse(CRadius2 * Cos(LHour * PI / 6), CRadius2 * Sin(LHour * PI / 6), LPointWidth, LPointWidth);
     end;
     
+    LAngles := GetClockAngles(TRUE);
+    
     LAgg.LineWidth(CLineWidth);
     LAgg.LineColor(LDarkBlue);
-    LAgg.Line(0, 0, CRadius4 * Cos(LHourAngle),   CRadius4 * Sin(LHourAngle));
-    LAgg.Line(0, 0, CRadius3 * Cos(LMinuteAngle), CRadius3 * Sin(LMinuteAngle));
+    LAgg.Line(0, 0, CRadius4 * Cos(LAngles.Hour),   CRadius4 * Sin(LAngles.Hour));
+    LAgg.Line(0, 0, CRadius3 * Cos(LAngles.Minute), CRadius3 * Sin(LAngles.Minute));
     
     LAgg.NoLine;
     LAgg.Font(CFont, 18);

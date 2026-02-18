@@ -18,8 +18,6 @@ type
   end;
 
 const
-  //SURFACE_WIDTH = 480;
-  //SURFACE_HEIGHT = 480;
   SURFACE_WIDTH = 240;
   SURFACE_HEIGHT = 180;
 
@@ -33,7 +31,7 @@ begin
   agg^.noLine;
 
   // First rectangle
-  agg^.fillColor($00, $00, $FF, $80);
+  agg^.fillColor($00, $00, $FF, $7F);
   agg^.rectangle(70, 40, 170, 140);
 
   // [!] set center point to the middle of TBitmap surface
@@ -47,7 +45,7 @@ begin
 
   // The same rectangle in a new coordinates
   //agg^.lineColor($FF, $00, $00);
-  agg^.fillColor($FF, $00, $00, $80);
+  agg^.fillColor($FF, $00, $00, $7F);
   agg^.rectangle(70, 40, 170, 140);
 end;
 

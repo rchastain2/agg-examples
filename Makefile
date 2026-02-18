@@ -45,8 +45,7 @@ endif
 	@./$@
 
 clean:
-	@rm -fv units/*.o units/*.ppu
-	@rm -fv *.bak *.log
+	@rm -fv *.bak *.log $(TARGETS)
 
 distclean: clean
-	@rm -fv $(TARGETS)
+	@rm -fv units/*.o units/*.ppu

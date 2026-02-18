@@ -22,13 +22,22 @@ type
   end;
 
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
+var
+  c1, c2, c3: Color;
 begin
   agg^.clearAll(0, 0, 0, 0);
-  agg^.lineCap(CapRound);
-  agg^.lineWidth(5);
-  agg^.lineColor(0, 0, 255);
-  agg^.fillColor(255, 0, 0, 127);
-  agg^.ellipse(100, 100, 80, 60);
+  
+  agg^.noLine;
+  
+  c1.Construct(255, 255, 255);
+  c2.Construct(0, 0, 255);
+  c3.Construct(255, 0, 0, 127);
+  
+  agg^.fillRadialGradient(50, 150, 40, c1, c2);
+  agg^.rectangle(0, 100, 100, 200);
+  
+  agg^.fillRadialGradient(150, 150, 40, c1, c2, c3);
+  agg^.rectangle(100, 100, 200, 200);
 end;
 
 var
