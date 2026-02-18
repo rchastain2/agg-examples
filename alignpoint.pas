@@ -35,7 +35,6 @@ var
   x1, y1, x2, y2: double;
 begin
   agg^.clearAll(0, 0, 0, 0);
-  //agg^.clearAll(255, 255, 255);
 
   // Initial coordinates
   x1 := 10;
