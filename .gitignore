@@ -1,8 +1,5 @@
-# Exemples à finir
 
 polyline.*
-
-# Autres fichiers à ignorer
 
 arial.ttf
 
@@ -18,3 +15,5 @@ rotate5.png
 scale3.png
 scale4.png
 scale5.png
+
+units/

@@ -53,34 +53,36 @@ function NoCase(s)
   return s
 end
 
-function Beautify(AText, AKeyWords)
+function Beautify(AText, AKeywords)
   local LText = AText
-  for j = 1, #AKeyWords do
-    LText = string.gsub(LText, '%f[%a]' .. NoCase(AKeyWords[j]) .. '%f[%A]', AKeyWords[j])
+  for j = 1, #AKeywords do
+    LText = string.gsub(LText, '%f[%a]' .. NoCase(AKeywords[j]) .. '%f[%A]', AKeywords[j])
     -- https://stackoverflow.com/a/32854326/18595765
   end
   return LText
 end
 
+-- =============================================================================
+
 -- Main program
 
+local LExpert = require('pascal_expert') -- Pascal Expert
 local LAppName = 'Pascal Code Beautifier 0.1'
 local LUsage =
   'Usage:\n' ..
   '  lua pcb.lua IN_FILE [OUT_FILE]\n'
-
 io.write(LAppName .. '\n')
 
-local LExpert = require('pascal_expert')
-
-local LKeyWords = LinesFrom('keywords.txt')
-
-io.write('[INFO] ' .. #LKeyWords .. ' words loaded\n')
-
-if #arg >= 1 then
-  local LFileName = arg[1]
-  local LDestName = (#arg >= 2) and arg[2] or LFileName
+if #arg >= 2 then
+  local LKeywordsFile = arg[1]
+  local LFileName     = arg[2]
+  local LDestName     = (#arg >= 3) and arg[3] or LFileName
   
+  -- Load keywords
+  
+  local LKeywords = LinesFrom(LKeywordsFile)
+  io.write('[INFO] ' .. #LKeywords .. ' words loaded\n')
+
   -- Read file
   
   local LText = ReadText(LFileName)
@@ -91,7 +93,7 @@ if #arg >= 1 then
   
   -- Replace keywords
   
-  LText = Beautify(LText, LKeyWords)
+  LText = Beautify(LText, LKeywords)
   
   -- Restore comment, litterals and directives
   LText = LExpert.RestoreComments(LText)

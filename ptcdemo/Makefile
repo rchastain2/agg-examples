@@ -1,21 +1,17 @@
 
-SOURCES := $(filter-out aggexample.pas clockutils.pas,$(wildcard *.pas))
-TARGETS := $(SOURCES:%.pas=%)
+PC = fpc
 
 ifdef LCL
 LAZARUS := ~/Documents/sources/lazarus
 AGGPAS := $(LAZARUS)/components/aggpas/src
 else
 FPGUI := ~/Documents/pascal/sources/fpgui/develop
-#AGGPAS := $(FPGUI)/src/corelib/render/software
 AGGPAS := $(FPGUI)/framework/src/main/pascal/corelib/render/software
 AGGEXT := $(FPGUI)/extras/aggpas
 endif
 
-PC := fpc
-PFLAGS := -Mdelphi
-PFLAGS += -ghl
-#PFLAGS += -vt
+PFLAGS := -Mobjfpc -Sh
+PFLAGS += -FUunits
 
 PFLAGS += -Fi$(AGGPAS)
 PFLAGS += -Fu$(AGGPAS)
@@ -26,26 +22,21 @@ ifndef LCL
 PFLAGS += -Fu$(AGGEXT)
 endif
 
-PFLAGS += -FUunits
+SOURCES := $(wildcard *.pas)
+TARGETS := $(SOURCES:%.pas=%)
 
 all: $(TARGETS)
 
 %: %.pas
-ifeq ($(USER),roland)
-	#pcfi $<
-endif
-	#lua pcb.lua agg_2d.txt $<
 ifeq ($(OS),Windows_NT)
 	@if not exist units mkdir units
 else
 	@[ -d units ] || mkdir -p units
 endif
-	@rm -fv $@
-	@$(PC) $< $(PFLAGS)
-	@./$@
+	@$(PC) $(PFLAGS) $<
 
 clean:
-	@rm -fv *.bak *.log $(TARGETS)
+	@rm -fv *.bak *.bak? *.log *.o *.ppu
 
 distclean: clean
-	@rm -fv units/*.o units/*.ppu
+	@rm -fv $(TARGETS)

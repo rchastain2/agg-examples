@@ -6,7 +6,7 @@ uses
   AggExample,
   agg_2D,
   agg_basics,
-  clockutils;
+  ClockUtils;
 
 type
   TAggExample1 = class(TAggExample)
