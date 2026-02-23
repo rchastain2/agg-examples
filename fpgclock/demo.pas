@@ -159,6 +159,7 @@ begin
   SetPosition(0, 0, CImgWidth, CImgHeight);
   WindowTitle := 'Simple clock for fpGUI & AGGPas';
   WindowPosition := wpScreenCenter;
+  Sizeable := FALSE;
   
   Width := CImgWidth;
   Height := CImgHeight;
