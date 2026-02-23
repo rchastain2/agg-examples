@@ -156,16 +156,19 @@ end;
 procedure TClockForm.AfterCreate;
 begin
   Name := 'ClockForm';
-  SetPosition(0, 0, CImgWidth, CImgHeight);
+
   WindowTitle := 'Simple clock for fpGUI & AGGPas';
+  
+  SetPosition(0, 0, CImgWidth, CImgHeight);
+  //Width := CImgWidth;
+  //Width := CImgHeight;
   WindowPosition := wpScreenCenter;
   Sizeable := FALSE;
   
-  Width := CImgWidth;
-  Height := CImgHeight;
-  
   LWidget := TClockWidget.Create(self);
-  LWidget.SetPosition(0, 0, CImgWidth, CImgHeight);
+  //LWidget.SetPosition(0, 0, CImgWidth, CImgHeight);
+  LWidget.Width := CImgWidth;
+  LWidget.Height := CImgHeight;
 end;
 
 var
