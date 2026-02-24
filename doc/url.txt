@@ -1,0 +1,6 @@
+https://www.crossgl.com/aggpas/documentation/index.html
+https://www.crossgl.com/aggpas/aggpas-demo.htm
+
+https://agg.sourceforge.net/antigrain.com/demo/index.html
+https://agg.sourceforge.net/antigrain.com/doc/introduction/introduction.agdoc.html
+https://agg.sourceforge.net/antigrain.com/doc/basic_renderers/basic_renderers.agdoc.html 
