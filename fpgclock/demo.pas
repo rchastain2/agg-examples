@@ -15,7 +15,7 @@ uses
   
   Agg2D,
   
-  clockutils;
+  ClockUtils;
 
 type
   TClockWidget = class(TFpgWidget)
@@ -25,6 +25,7 @@ type
     procedure HandlePaint; override;
   public
     constructor Create(AComp: TComponent); override;
+    destructor Destroy; override;
     procedure DoAggPainting;
   end;
   
@@ -59,43 +60,43 @@ const
   CRadius2 = 6 * CImgWidth div 16;
   CRadius3 = 5 * CImgWidth div 16;
   CRadius4 = 4 * CImgWidth div 16;
-  CLineWidth = 10;
-  CPointWidth: array[boolean] of integer = (CLineWidth div 2 + 1, CLineWidth div 2 + 2);
+  CLineW = 10;
+  CPointW: array[boolean] of integer = (CLineW div 2 + 1, CLineW div 2 + 2);
 var
   LAgg: TAgg2D;
-  LLightBlue, LDarkBlue: TAggColor;
-  LPointWidth: integer;
-  LAngles: TClockAngles;
+  LLight, LDark: TAggColor;
+  LPointW: integer;
+  LAngl: TClockAngles;
   LHour: integer;
 begin
   LAgg := TAgg2D.Create(self);
   if LAgg.Attach(FImage, FALSE) then
   begin
-    LLightBlue.Construct(35, 151, 212); // #2397D4
-    LDarkBlue.Construct(38, 47, 69); // #262F45
+    LLight.Construct(35, 151, 212); // #2397D4
+    LDark.Construct(38, 47, 69); // #262F45
     
     LAgg.Translate(CImgWidth div 2, CImgHeight div 2);
-    LAgg.ClearAll(LLightBlue);
+    LAgg.ClearAll(LLight);
     
-    LAgg.LineWidth(CLineWidth);
-    LAgg.LineColor(LDarkBlue);
+    LAgg.LineWidth(CLineW);
+    LAgg.LineColor(LDark);
     LAgg.FillColor(255, 255, 255);
     LAgg.Ellipse(0, 0, CRadius1, CRadius1);
     
     LAgg.NoLine;
-    LAgg.FillColor(LDarkBlue);
+    LAgg.FillColor(LDark);
     for LHour := 0 to 11 do
     begin
-      LPointWidth := CPointWidth[LHour mod 3 = 0];
-      LAgg.Ellipse(CRadius2 * Cos(LHour * PI / 6), CRadius2 * Sin(LHour * PI / 6), LPointWidth, LPointWidth);
+      LPointW := CPointW[LHour mod 3 = 0];
+      LAgg.Ellipse(CRadius2 * Cos(LHour * PI / 6), CRadius2 * Sin(LHour * PI / 6), LPointW, LPointW);
     end;
     
-    LAngles := GetClockAngles(TRUE);
+    LAngl := GetClockAngles(TRUE);
     
-    LAgg.LineWidth(CLineWidth);
-    LAgg.LineColor(LDarkBlue);
-    LAgg.Line(0, 0, CRadius4 * Cos(LAngles.Hour),   CRadius4 * Sin(LAngles.Hour));
-    LAgg.Line(0, 0, CRadius3 * Cos(LAngles.Minute), CRadius3 * Sin(LAngles.Minute));
+    LAgg.LineWidth(CLineW);
+    LAgg.LineColor(LDark);
+    LAgg.Line(0, 0, CRadius4 * Cos(LAngl.Hour),   CRadius4 * Sin(LAngl.Hour));
+    LAgg.Line(0, 0, CRadius3 * Cos(LAngl.Minute), CRadius3 * Sin(LAngl.Minute));
     
     LAgg.NoLine;
     LAgg.Font(CFont, 18);
@@ -111,6 +112,12 @@ begin
   inherited Create(AComp);
   FImage := TFpgImage.Create;
   FImage.AllocateImage(32, CImgWidth, CImgHeight);
+end;
+
+destructor TClockWidget.Destroy;
+begin
+  FImage.Free;
+  inherited Destroy;
 end;
 
 procedure TClockWidget.HandlePaint;
@@ -136,6 +143,7 @@ end;
 procedure TClockForm.FormDestroy(Sender: TObject);
 begin
   LTimer.Destroy;
+  //LWidget.Free;
 end;
 
 procedure TClockForm.HandleKeyPress(var KeyCode: word; var ShiftState: TShiftState; var Consumed: boolean);

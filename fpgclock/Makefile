@@ -2,11 +2,11 @@
 SOURCES := $(filter-out clockutils.pas,$(wildcard *.pas))
 TARGETS := $(SOURCES:%.pas=%)
 
-#FPGUI := ~/Documents/pascal/sources/fpgui/old
-#FPGUI := ~/Documents/pascal/sources/fpgui/2_0_3
+ifndef FPGUI
 FPGUI := ~/Documents/pascal/sources/fpgui/develop
+endif
 
-PFLAGS := -Mobjfpc -Sh
+PFLAGS := -Mobjfpc -Sh -ghl
 PFLAGS += -FUunits
 
 ifdef PPU

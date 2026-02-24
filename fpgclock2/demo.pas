@@ -12,6 +12,7 @@ uses
   fpg_main,
   fpg_form,
   fpg_widget,
+  fpg_imgfmt_png,
   
   Agg2D,
   ClockUtils;
@@ -19,11 +20,12 @@ uses
 type
   TClockWidget = class(TFpgWidget)
   private
-    FImage: TFpgImage;
+    FImage, FStatic: TFpgImage;
   protected
     procedure HandlePaint; override;
   public
     constructor Create(AComp: TComponent); override;
+    destructor Destroy; override;
     procedure DoAggPainting;
   end;
   
@@ -44,22 +46,22 @@ type
 {$I clocksize}
 
 procedure TClockWidget.DoAggPainting;
+(* https://www.crossgl.com/aggpas/documentation/index.html#CopyImage2 *)
 var
   LAgg: TAgg2D;
-  LLight, LDark: TAggColor;
-  //LPointWidth: integer;
+  LColor: TAggColor;
   LAngles: TClockAngles;
-  //LHour: integer;
 begin
   LAgg := TAgg2D.Create(self);
   if LAgg.Attach(FImage, FALSE) then
   begin
-    LLight.Construct(35, 151, 212); // #2397D4
-    LDark.Construct(38, 47, 69); // #262F45
+    //LLight.Construct(35, 151, 212); // #2397D4
+    LColor.Construct(38, 47, 69); // #262F45
+    
+    LAgg.CopyImage(FStatic, 0, 0);
     
     LAgg.Translate(CImgWidth div 2, CImgHeight div 2);
-    LAgg.ClearAll(LLight);
-    
+
     (*
     LAgg.LineWidth(CLineWidth);
     LAgg.LineColor(LDark);
@@ -78,7 +80,7 @@ begin
     LAngles := GetClockAngles(TRUE);
     
     LAgg.LineWidth(CLineWidth);
-    LAgg.LineColor(LDark);
+    LAgg.LineColor(LColor);
     LAgg.Line(0, 0, CRadius4 * Cos(LAngles.Hour),   CRadius4 * Sin(LAngles.Hour));
     LAgg.Line(0, 0, CRadius3 * Cos(LAngles.Minute), CRadius3 * Sin(LAngles.Minute));
   end;
@@ -87,10 +89,22 @@ begin
 end;
 
 constructor TClockWidget.Create(AComp: TComponent);
+const
+  CFile = 'factory' + DirectorySeparator + 'static.png';
 begin
   inherited Create(AComp);
   FImage := TFpgImage.Create;
   FImage.AllocateImage(32, CImgWidth, CImgHeight);
+  FStatic := LoadImage_PNG(CFile);
+  if not Assigned(FStatic) then
+    raise Exception.Create('Failed to load ' + CFile);
+end;
+
+destructor TClockWidget.Destroy;
+begin
+  FStatic.Free;
+  FImage.Free;
+  inherited Destroy;
 end;
 
 procedure TClockWidget.HandlePaint;
@@ -116,6 +130,7 @@ end;
 procedure TClockForm.FormDestroy(Sender: TObject);
 begin
   LTimer.Destroy;
+  //LWidget.Free;
 end;
 
 procedure TClockForm.HandleKeyPress(var KeyCode: word; var ShiftState: TShiftState; var Consumed: boolean);
@@ -137,7 +152,7 @@ procedure TClockForm.AfterCreate;
 begin
   Name := 'ClockForm';
 
-  WindowTitle := 'Simple clock for fpGUI & AGGPas';
+  WindowTitle := 'Clock for fpGUI & AGGPas';
   
   SetPosition(0, 0, CImgWidth, CImgHeight);
   //Width := CImgWidth;
