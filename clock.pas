@@ -59,7 +59,7 @@ begin
   for LHour := 0 to 11 do
   begin
     x := R2 * Cos(PI/2 - LHour * PI/6);
-    y := R2 * Sin(PI/2 - LHour * PI/6);
+    y := -R2 * Sin(PI/2 - LHour * PI/6);
     agg^.ellipse(x, y, 4, 4);
     LPoints1[LHour].x := x;
     LPoints1[LHour].y := y;
@@ -70,8 +70,8 @@ begin
   for i := 0 to 10 do
   begin
     LPoints2[i].x := R4 * Cos(LAngle);
-    LPoints2[i].y := R4 * Sin(LAngle);
-    LAngle := LAngle - 2*PI/11; // Merci PA !
+    LPoints2[i].y := -R4 * Sin(LAngle);
+    LAngle := LAngle - 2*PI/11;
   end;
   
   //agg^.lineWidth(1);
@@ -98,9 +98,9 @@ begin
   agg^.lineWidth(8);
   agg^.lineColor(LDark);
   
-  LAngles := GetClockAngles;
-  agg^.line(0, 0, R4 * Cos(LAngles.Hour),   R4 * Sin(LAngles.Hour));
-  agg^.line(0, 0, R3 * Cos(LAngles.Minute), R3 * Sin(LAngles.Minute));
+  LAngles := GetClockAngles();
+  agg^.line(0, 0, R4 * Cos(LAngles.Hour),   -R4 * Sin(LAngles.Hour));
+  agg^.line(0, 0, R3 * Cos(LAngles.Minute), -R3 * Sin(LAngles.Minute));
 end;
 
 var

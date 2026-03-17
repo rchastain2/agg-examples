@@ -20,11 +20,11 @@ PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/corelib/render/software
 PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/gui
 PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/gui/db
 PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/3rdparty/regex
-PFLAGS += -Fi$(FPGUI)/framework/target
+#PFLAGS += -Fi$(FPGUI)/framework/target
 PFLAGS += -Fi$(FPGUI)/framework/src/main/pascal/corelib/render/software
 PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/corelib/render/software
 endif
-
+#libraries/fpgui/framework/src/main/pascal/corelib/fpg_base.pas
 PFLAGS += -Fifactory
 
 all: $(TARGETS)

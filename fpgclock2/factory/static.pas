@@ -52,7 +52,7 @@ begin
   for LHour := 0 to 11 do
   begin
     x := CRadius2 * Cos(PI/2 - LHour * PI/6);
-    y := CRadius2 * Sin(PI/2 - LHour * PI/6);
+    y := -CRadius2 * Sin(PI/2 - LHour * PI/6);
     LPointWidth := CPointWidth[LHour mod 3 = 0];
     agg^.ellipse(x, y, LPointWidth, LPointWidth);
     LPoints1[LHour].x := x;
@@ -61,15 +61,15 @@ begin
   
   agg^.noLine;
   agg^.font(CFont, 18);
-  agg^.textAlignment(AlignRight, AlignBottom);
-  agg^.text(CImgWidth div 2 - 12, - CImgHeight div 2 + 12, 'AGGPas', true, 0.0, 0.0);
+  agg^.textAlignment(AlignLeft, AlignBottom);
+  agg^.text(CImgWidth div 2 - 12, CImgHeight div 2 - 12, 'AGGPas', true, 0.0, 0.0);
   
   LAngle := PI/2;
   for i := 0 to 10 do
   begin
     LPoints2[i].x := CRadius4 * Cos(LAngle);
-    LPoints2[i].y := CRadius4 * Sin(LAngle);
-    LAngle := LAngle - 2*PI/11; // Merci PA !
+    LPoints2[i].y := -CRadius4 * Sin(LAngle);
+    LAngle := LAngle - 2*PI/11;
   end;
   
   //agg^.lineWidth(1);

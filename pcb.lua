@@ -66,7 +66,7 @@ end
 
 -- Main program
 
-local LExpert = require('pascal_expert') -- Pascal Expert
+local LExpert = require('pexp') -- Pascal Expert
 local LAppName = 'Pascal Code Beautifier 0.1'
 local LUsage =
   'Usage:\n' ..
