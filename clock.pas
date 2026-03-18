@@ -58,49 +58,45 @@ begin
   agg^.fillColor(LDark);
   for LHour := 0 to 11 do
   begin
-    x := R2 * Cos(PI/2 - LHour * PI/6);
-    y := -R2 * Sin(PI/2 - LHour * PI/6);
+    x := R2 * Cos(PI / 2 - LHour * PI / 6);
+    y := R2 * Sin(PI / 2 - LHour * PI / 6);
     agg^.ellipse(x, y, 4, 4);
     LPoints1[LHour].x := x;
     LPoints1[LHour].y := y;
   end;
   
-  //(*
-  LAngle := PI/2;
+  LAngle := PI / 2;
   for i := 0 to 10 do
   begin
     LPoints2[i].x := R4 * Cos(LAngle);
-    LPoints2[i].y := -R4 * Sin(LAngle);
-    LAngle := LAngle - 2*PI/11;
+    LPoints2[i].y := R4 * Sin(LAngle);
+    LAngle := LAngle - 2 * PI / 11;
   end;
   
-  //agg^.lineWidth(1);
-  //agg^.lineColor(LLight);
-  //agg^.lineCap(CapRound);
-  //agg^.fillColor(LLight);
+ {agg^.lineWidth(1);
+  agg^.lineColor(LLight);
+  agg^.lineCap(CapRound);
+  agg^.fillColor(LLight);}
   agg^.fillRadialGradient(0, 0, R2, LLight, LWhite);
   for i := 1 to 11 do
   begin
-    //agg^.curve(0, 0, LPoints2[i mod 11].x, LPoints2[i mod 11].y, LPoints1[i].x, LPoints1[i].y);
-    //agg^.curve(LPoints2[i mod 11].x, LPoints2[i mod 11].y, 0, 0, LPoints1[i].x, LPoints1[i].y);
-    //agg^.curve(LPoints2[i mod 11].x, LPoints2[i mod 11].y, LPoints1[i].x, LPoints1[i].y, 0, 0);
+   {agg^.curve(0, 0, LPoints2[i mod 11].x, LPoints2[i mod 11].y, LPoints1[i].x, LPoints1[i].y);
+    agg^.curve(LPoints2[i mod 11].x, LPoints2[i mod 11].y, 0, 0, LPoints1[i].x, LPoints1[i].y);
+    agg^.curve(LPoints2[i mod 11].x, LPoints2[i mod 11].y, LPoints1[i].x, LPoints1[i].y, 0, 0);}
     
     agg^.resetPath;
-    
-    //agg^.curve(0, 0, LPoints2[i mod 11].x, LPoints2[i mod 11].y, LPoints1[i].x, LPoints1[i].y, 0, 0);
+   {agg^.curve(0, 0, LPoints2[i mod 11].x, LPoints2[i mod 11].y, LPoints1[i].x, LPoints1[i].y, 0, 0);}
     agg^.curve(LPoints2[i mod 11].x, LPoints2[i mod 11].y, 0, 0, LPoints1[i].x, LPoints1[i].y, LPoints2[i mod 11].x, LPoints2[i mod 11].y);
-    
     agg^.closePolygon;
     agg^.drawPath;
   end;
-  //*)
   
   agg^.lineWidth(8);
   agg^.lineColor(LDark);
   
   LAngles := GetClockAngles();
-  agg^.line(0, 0, R4 * Cos(LAngles.Hour),   -R4 * Sin(LAngles.Hour));
-  agg^.line(0, 0, R3 * Cos(LAngles.Minute), -R3 * Sin(LAngles.Minute));
+  agg^.line(0, 0, R4 * Cos(LAngles.Hour),   R4 * Sin(LAngles.Hour));
+  agg^.line(0, 0, R3 * Cos(LAngles.Minute), R3 * Sin(LAngles.Minute));
 end;
 
 var

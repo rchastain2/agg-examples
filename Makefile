@@ -13,14 +13,11 @@ endif
 
 PC := fpc
 PFLAGS := -Mdelphi
-PFLAGS += -ghl
-#PFLAGS += -vt
-
 PFLAGS += -Fi$(AGGPAS)
 PFLAGS += -Fu$(AGGPAS)
-PFLAGS += -Fu$(AGGPAS)/platform/linux
-PFLAGS += -Fu$(AGGPAS)/ctrl
-PFLAGS += -Fu$(AGGPAS)/util
+#PFLAGS += -Fu$(AGGPAS)/platform/linux
+#PFLAGS += -Fu$(AGGPAS)/ctrl
+#PFLAGS += -Fu$(AGGPAS)/util
 ifndef LCL
 PFLAGS += -Fu$(AGGEXT)
 endif
