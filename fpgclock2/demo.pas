@@ -81,6 +81,7 @@ begin
     
     LAgg.LineWidth(CLineWidth);
     LAgg.LineColor(LColor);
+   {LAgg.LineCap(AGG_CapSquare);}
     LAgg.Line(0, 0, CRadius4 * Cos(LAngles.Hour),   CRadius4 * Sin(LAngles.Hour));
     LAgg.Line(0, 0, CRadius3 * Cos(LAngles.Minute), CRadius3 * Sin(LAngles.Minute));
   end;

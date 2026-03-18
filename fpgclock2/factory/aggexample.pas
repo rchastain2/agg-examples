@@ -29,7 +29,7 @@ type
 implementation
 
 uses
-  FPimage,
+  FPImage,
   FPWritePNG;
 
 const
@@ -72,9 +72,12 @@ var
   x, y: integer;
   
   function getBufItemAsWord(ADelta: byte): Word;
+  var
+    y1: integer;
   begin
+    y1 := FHeight - y - 1;
     result :=
-      Word(FData[x * CColorW + y * FWidth * CColorW + ADelta] shl 8) or
+      Word(FData[x * CColorW + y1 * FWidth * CColorW + ADelta] shl 8) or
       Word(128);
   end;
   
@@ -93,9 +96,9 @@ begin
   
   png := TFPWriterPNG.Create;
   png.UseAlpha := TRUE;
+  png.WordSized := FALSE;
   img.SaveToFile(FFileName, png);
   png.Free;
-  
   img.Free;
 end;
 
