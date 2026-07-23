@@ -2,11 +2,10 @@
 SOURCES := $(wildcard *.pas)
 TARGETS := $(SOURCES:%.pas=%)
 
-#FPGUI := ~/Documents/pascal/sources/fpgui/old
-#FPGUI := ~/Documents/pascal/sources/fpgui/2_0_1
-FPGUI := ~/Documents/pascal/sources/fpgui/2_0_3
+FPGUI := ~/Documents/pascal/sources/fpgui/develop
 
 PFLAGS := -Mobjfpc -Sh
+PFLAGS += -FUunits
 
 ifdef USE_PPU
 PFLAGS += -Fu$(FPGUI)/framework/target/units
@@ -38,16 +37,23 @@ PFLAGS += -Fi$(FPGUI)/framework/target
 PFLAGS += -Fi$(FPGUI)/framework/src/main/pascal/corelib/render/software
 PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/corelib/render/software
 
+PFLAGS += -Fu$(FPGUI)/extras/aggpas
+
 #PFLAGS += -dAGGCanvas
 endif
 
 all: $(TARGETS)
 
 %: %.pas
+ifeq ($(OS),Windows_NT)
+	@if not exist units mkdir units
+else
+	@[ -d units ] || mkdir -p units
+endif
 	@fpc $< $(PFLAGS)
 
 clean:
-	@rm -fv *.o *.ppu
+	@rm -fv units/*.o units/*.ppu
 
 distclean: clean
 	@rm -fv $(TARGETS)

@@ -39,7 +39,7 @@ endif
 	@fpc $< $(PFLAGS)
 
 clean:
-	@rm -fv *.o *.ppu
+	@rm -fv units/*.o units/*.ppu
 
 distclean: clean
 	@rm -fv $(TARGETS)

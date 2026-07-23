@@ -1,15 +1,18 @@
 
-SOURCES := $(filter-out aggexample.pas clockutils.pas,$(wildcard *.pas))
+SOURCES := $(filter-out aggexample.pas,$(wildcard *.pas))
 TARGETS := $(SOURCES:%.pas=%)
 
 ifdef LCL
-LAZARUS := ~/Documents/sources/lazarus
+LAZARUS := $(HOME)/Documents/sources/lazarus
 AGGPAS := $(LAZARUS)/components/aggpas/src
 else
-FPGUI := ~/Documents/pascal/sources/fpgui/develop
+FPGUI := $(HOME)/Documents/sources/fpgui
 AGGPAS := $(FPGUI)/framework/src/main/pascal/corelib/render/software
 AGGEXT := $(FPGUI)/extras/aggpas
 endif
+
+MATHLIB_VER := 1_3_0
+MATHLIB := $(HOME)/Documents/sources/mathlib-fp/$(MATHLIB_VER)/src
 
 PC := fpc
 PFLAGS := -Mdelphi
@@ -18,6 +21,7 @@ PFLAGS += -Fu$(AGGPAS)
 ifndef LCL
 PFLAGS += -Fu$(AGGEXT)
 endif
+PFLAGS += -Fu$(MATHLIB)
 
 PFLAGS += -FUunits
 

@@ -13,9 +13,9 @@ uses
   Agg2D;
   
 type
-  tfpgwidget1 = class(tfpgwidget)
+  TFpgWidget1 = class(TFpgWidget)
   private
-    img: tfpgimage;
+    FImg: TFpgImage;
     FShowPath: Boolean;
     FFlipY: Boolean;
     procedure SetShowPath(AValue: Boolean);
@@ -23,39 +23,39 @@ type
   protected
     procedure HandlePaint; override;
   public
-    constructor create(acom: tcomponent); override;
+    constructor Create(AComp: TComponent); override;
     procedure DoAggPainting;
     property ShowPath: boolean read FShowPath write SetShowPath;
     property FlipY: boolean read FFlipY write SetFlipY;
   end;
 
   TMainForm = class(TfpgForm)
-    mywidget: tfpgwidget1;
-    cb: TfpgCheckbox;
-    cbflip: TfpgCheckbox;
+    FWidget1: TFpgWidget1;
+    FFCheckBoxShow: TfpgCheckbox;
+    FFCheckBoxFlip: TfpgCheckbox;
     procedure OnShowPathChanged(Sender: TObject);
     procedure OnFlipYChanged(Sender: TObject);
     procedure AfterCreate; override;
   end;
 
-procedure tfpgwidget1.SetShowPath(AValue: Boolean);
+procedure TFpgWidget1.SetShowPath(AValue: Boolean);
 begin
   FShowPath := AValue;
   Invalidate;
 end;
 
-procedure tfpgwidget1.SetFlipY(AValue: boolean);
+procedure TFpgWidget1.SetFlipY(AValue: boolean);
 begin
   FFlipY := AValue;
   Invalidate;
 end;
 
-procedure tfpgwidget1.DoAggPainting;
+procedure TFpgWidget1.DoAggPainting;
 var
-  ac: tagg2d;
+  ac: TAgg2D;
 begin
-  ac := tagg2d.Create(self);
-  if ac.Attach(img, FFlipY) then
+  ac := TAgg2D.Create(self);
+  if ac.Attach(FImg, FFlipY) then
   begin
     ac.ClearAll(255, 255, 255);
     if FShowPath then
@@ -79,49 +79,49 @@ begin
     ac.LineColor($32, $CD, $32);
     ac.Curve(0, 0, 50, 50, 100, 0, 150, 50);
   end;
-  img.UpdateImage;
+  FImg.UpdateImage;
   ac.Free;
 end;
 
-constructor tfpgwidget1.create(acom: tcomponent);
+constructor TFpgWidget1.Create(AComp: TComponent);
 begin
-  inherited create(acom);
+  inherited Create(AComp);
   FShowPath := False;
   FFlipY := False;
-  img := tfpgimage.Create;
-  img.AllocateImage(32, 300, 100);
+  FImg := TFpgImage.Create;
+  FImg.AllocateImage(32, 300, 100);
 end;
 
-procedure tfpgwidget1.HandlePaint;
+procedure TFpgWidget1.HandlePaint;
 begin
   DoAggPainting;
-  canvas.clear(clwhite);
-  canvas.DrawImage(0, 0, img);
-  //canvas.DrawArc(30, 30, 50, 50, 0, 135);
+  Canvas.clear(clwhite);
+  Canvas.DrawImage(0, 0, FImg);
+  //Canvas.DrawArc(30, 30, 50, 50, 0, 135);
 end;
 
 procedure tmainform.OnSHowPathChanged(Sender: TObject);
 begin
-  mywidget.ShowPath := cb.Checked;
+  FWidget1.ShowPath := FFCheckBoxShow.Checked;
 end;
 
 procedure tmainform.OnFlipYChanged(Sender: TObject);
 begin
-  mywidget.FlipY := cbflip.Checked;
+  FWidget1.FlipY := FFCheckBoxFlip.Checked;
 end;
 
 procedure tmainform.AfterCreate;
 begin
   width := 300;
   height := 100;
-  mywidget := tfpgwidget1.create(self);
-  mywidget.SetPosition(0, 0, 300, 100);
+  FWidget1 := TFpgWidget1.Create(self);
+  FWidget1.SetPosition(0, 0, 300, 100);
 
-  cb := CreateCheckBox(self, 200, 0, 'Show Path');
-  cb.OnChange := @OnShowPathChanged;
+  FFCheckBoxShow := CreateCheckBox(self, 200, 0, 'Show Path');
+  FFCheckBoxShow.OnChange := @OnShowPathChanged;
 
-  cbflip := CreateCheckBox(self, 200, cb.Height, 'Flip Y');
-  cbflip.OnChange := @OnFlipYChanged;
+  FFCheckBoxFlip := CreateCheckBox(self, 200, FFCheckBoxShow.Height, 'Flip Y');
+  FFCheckBoxFlip.OnChange := @OnFlipYChanged;
 end;
 
 var
