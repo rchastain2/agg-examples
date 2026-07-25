@@ -11,7 +11,7 @@ AGGPAS := $(FPGUI)/framework/src/main/pascal/corelib/render/software
 AGGEXT := $(FPGUI)/extras/aggpas
 endif
 
-MATHLIB_VER := 1_3_0
+MATHLIB_VER := 1_4_0
 MATHLIB := $(HOME)/Documents/sources/mathlib-fp/$(MATHLIB_VER)/src
 
 PC := fpc
@@ -23,22 +23,31 @@ PFLAGS += -Fu$(AGGEXT)
 endif
 PFLAGS += -Fu$(MATHLIB)
 
-PFLAGS += -FUunits
+# Directory for compiled units
+UNITS := units
+
+PFLAGS += -FU$(UNITS)
+
+ifeq ($(OS),Windows_NT)
+PREFIX :=
+else
+PREFIX := ./
+endif
 
 all: $(TARGETS)
 
-%: %.pas
-ifeq ($(OS),Windows_NT)
-	@if not exist units mkdir units
-else
-	@[ -d units ] || mkdir -p units
-endif
-	@rm -fv $@
+%: %.pas $(UNITS)
+	$(info [INFO] Compile $<)
 	@$(PC) $< $(PFLAGS)
-	@./$@
+	$(info [INFO] Execute $@)
+	@$(PREFIX)$@
+
+$(UNITS):
+	$(info [INFO] Create directory for compiled units)
+	@mkdir $@
 
 clean:
-	@rm -fv *.bak *.log $(TARGETS)
+	@rm -fv *.bak *.log
 
 distclean: clean
-	@rm -fv units/*.o units/*.ppu
+	@rm -fv $(TARGETS) units/*.o units/*.ppu

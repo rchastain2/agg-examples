@@ -33,38 +33,40 @@ const
   end;
 
 const
-  CNumTriangles = 12;
+  CIterations = 11;
+
 var
-  V1, V2: TVector2D;
-  P1: TPoint2D;
-  i: integer;
+  c: Color;
+  V1, V2, old: TVector2D;
+  n: integer;
+
 begin
   agg^.clearAll(255, 255, 255, 255);
   
   agg^.lineCap(CapRound);
-  agg^.lineColor(0, 0, 255, 63);
-  agg^.lineWidth(0.001);
- {agg^.noLine;}
-  agg^.fillColor(0, 0, 255, 63);
+  agg^.lineWidth(1 / 1000);
+  c.Construct(0, 0, 255, 63);
+  agg^.lineColor(c);
+  agg^.fillColor(c);
   
   agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);
   agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);
   
+  WriteLn('| Vector coordinates | Length | Square root |');
+  WriteLn('| --- | --- | --- |');
+  
   V1 := TVector2D.Create(1, 0);
   
- {DrawLine(0, 0, V1.X, V1.Y);}
-  
-  for i := 1 to CNumTriangles do
+  for n := 1 to CIterations do
   begin
-    V2 := V1.Perpendicular.Normalise;
-    P1 := TPoint2D.Create(V1.X + V2.X, V1.Y + V2.Y);
+    old := V1;
     
-   {DrawLine(V1.X, V1.Y, P1.X, P1.Y);
-    DrawLine(0, 0, P1.X, P1.Y);}
+    V2 := V1.Normalise.Perpendicular;
+    V1 := V1 + V2;
     
-    DrawTriangle(0, 0, V1.X, V1.Y, P1.X, P1.Y);
+    WriteLn(Format('| %s | %.4f | √%d |', [V1.ToString, V1.Magnitude, n + 1]));
     
-    V1 := TVector2D.Create(P1.X, P1.Y);
+    DrawTriangle(0, 0, old.X, old.Y, V1.X, V1.Y);
   end;
 end;
 
