@@ -14,21 +14,6 @@ AGGPas is part of fpGUI and of Lazarus.
 git clone https://github.com/graemeg/fpGUI.git
 ```
 
-<!--
-```
-git clone --single-branch --branch maint https://github.com/graemeg/fpGUI.git
-```
-
-```
-SHA1=e127c5b09e31cdd240b16f3fff4509aefbc30ec0
-URL=https://github.com/graemeg/fpGUI.git
-PROJECT_NAME=e127c5b
-git clone $URL $PROJECT_NAME
-cd $PROJECT_NAME
-git reset --hard $SHA1
-```
--->
-
 Units are in [framework/src/main/pascal/corelib/render/software](https://github.com/graemeg/fpGUI/tree/develop/framework/src/main/pascal/corelib/render/software).
 
 The *agg_2D* unit is in [extras/aggpas](https://github.com/graemeg/fpGUI/tree/develop/extras/aggpas).
