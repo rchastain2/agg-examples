@@ -3,7 +3,7 @@ SOURCES := $(filter-out clockutils.pas,$(wildcard *.pas))
 TARGETS := $(SOURCES:%.pas=%)
 
 ifndef FPGUI
-FPGUI := ~/Documents/pascal/sources/fpgui/develop
+FPGUI := ~/Documents/sources/fpgui
 endif
 
 PFLAGS := -Mobjfpc -Sh# -ghl
@@ -18,13 +18,11 @@ PFLAGS += -Fi$(FPGUI)/framework/src/main/pascal/corelib/x11
 PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/corelib/x11
 PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/corelib/render/software
 PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/gui
-PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/gui/db
-PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/3rdparty/regex
-PFLAGS += -Fi$(FPGUI)/framework/src/main/pascal/corelib/render/software
-PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/corelib/render/software
-PFLAGS += -Fi$(FPGUI)/framework/src/main/resources/
-#PFLAGS += -Fi$(FPGUI)/framework/target
+PFLAGS += -Fi$(FPGUI)/framework/src/main/resources
 endif
+
+PFLAGS += -Fi$(FPGUI)/framework/src/main/pascal/corelib/render/software
+PFLAGS += -Fu$(FPGUI)/extras/aggpas
 
 PFLAGS += -Fifactory
 

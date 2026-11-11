@@ -56,7 +56,7 @@ $(TEMP):
 	mkdir $@
 
 clean:
-	rm -f $(TARGETS) $(TEMP)/*.o $(TEMP)/*.ppu
+	rm -f $(TEMP)/*.o $(TEMP)/*.ppu
 
 distclean: clean
 	rm -f *.bak *.bak? *.sta $(PROGRAM) $(PROGRAM).dbg $(PROGRAM).exe

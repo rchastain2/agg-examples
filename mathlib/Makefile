@@ -8,7 +8,6 @@ AGGPAS := $(LAZARUS)/components/aggpas/src
 else
 FPGUI := $(HOME)/Documents/sources/fpgui
 AGGPAS := $(FPGUI)/framework/src/main/pascal/corelib/render/software
-AGGEXT := $(FPGUI)/extras/aggpas
 endif
 
 MATHLIB_VER := 1_4_0
@@ -16,11 +15,7 @@ MATHLIB := $(HOME)/Documents/sources/mathlib-fp/$(MATHLIB_VER)/src
 
 PC := fpc
 PFLAGS := -Mdelphi
-PFLAGS += -Fi$(AGGPAS)
 PFLAGS += -Fu$(AGGPAS)
-ifndef LCL
-PFLAGS += -Fu$(AGGEXT)
-endif
 PFLAGS += -Fu$(MATHLIB)
 
 # Directory for compiled units

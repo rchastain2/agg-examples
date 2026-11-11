@@ -17,7 +17,7 @@ type
     procedure SaveToPng;
   private
     FFileName: string;
-    FData: array of int8;
+    FData: array of byte;
   protected
     FWidth, FHeight: integer;
     procedure Draw(agg: Agg2D_ptr); virtual;
@@ -47,6 +47,7 @@ end;
 destructor TAggExample.Destroy;
 begin
   SetLength(FData, 0);
+  inherited;
 end;
 
 procedure TAggExample.DrawImage;
@@ -74,11 +75,11 @@ var
   function getBufItemAsWord(ADelta: byte): Word;
   var
     y1: integer;
+    v: Word;
   begin
     y1 := FHeight - y - 1;
-    result :=
-      Word(FData[x * CColorW + y1 * FWidth * CColorW + ADelta] shl 8) or
-      Word(128);
+    v := FData[x * CColorW + y1 * FWidth * CColorW + ADelta];
+    result := (v shl 8) or v;
   end;
   
 begin

@@ -14,9 +14,7 @@ AGGPas fait partie de fpGUI et de Lazarus.
 git clone https://github.com/graemeg/fpGUI.git
 ```
 
-Les unités se trouvent dans le dossier [framework/src/main/pascal/corelib/render/software](https://github.com/graemeg/fpGUI/tree/develop/framework/src/main/pascal/corelib/render/software).
-
-L'unité *agg_2D* se trouve dans [extras/aggpas](https://github.com/graemeg/fpGUI/tree/develop/extras/aggpas).
+Les unités, y compris *agg_2D*, se trouvent dans le dossier [framework/src/main/pascal/corelib/render/software](https://github.com/graemeg/fpGUI/tree/develop/framework/src/main/pascal/corelib/render/software).
 
 ### Lazarus
 
@@ -50,3 +48,7 @@ Vous devrez modifier dans *Makefile* le chemin vers les unités AGGPas.
 L'unité *AggExample* est dérivée du programme [Agg2DConsole.dpr](https://github.com/graemeg/fpGUI/blob/develop/extras/aggpas/agg-demos/Agg2DConsole.dpr).
 
 Les exemples utilisent la police [Nougat](https://www.dafont.com/fr/nougat.font) de Dieter Steffmann.
+
+## Voir aussi
+
+- [Chess Image 2](https://github.com/rchastain2/chess-image-2)
