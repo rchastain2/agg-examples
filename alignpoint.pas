@@ -5,23 +5,23 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 {
   https://www.crossgl.com/aggpas/documentation/index.html#AlignPoint
 
  Description
-    Due to the Anti Aliasing technique (that's heavily used in AGG), it may be sometimes hard to achieve rendering of lines, that are eg. exactly 1 pixel wide.
-    You can read more about this issue here.
-    This line alignment problem can be partially solved by aligning the coordinates to the 0.5 subpixels (in screen coordinates), so that the lines would always have 100% opaque area.
-    Basic formula to do this alignment is: x = floor(x) + 0.5
-    This method is a helper method for reversely calculating world coordinates in such a way, that after the current transformations they become aligned on 0.5 fractional subpixel boundary.
+    Due to the anti-aliasing technique (which is heavily used in AGG), it may sometimes be hard to render lines that are e.g. exactly 1 pixel wide.
+    You can read more about this issue in the CrossGL documentation (see URL above).
+    This line alignment problem can be partially solved by aligning the coordinates to 0.5 subpixels (in screen coordinates), so that the lines always have a 100% opaque area.
+    The basic formula for this alignment is: x = floor(x) + 0.5
+    This method is a helper method for reversely calculating world coordinates in such a way that, after the current transformations, they become aligned on the 0.5 fractional subpixel boundary.
 
 Parameters
     x : PDouble
-    Initial X world (user) system coordinate. This parameter receives aligned value of X coordinate (in world coordinates system), that will snap to the 0.5 subpixel boundary on X axis when rendering on screen.
+    Initial X world (user) system coordinate. This parameter receives the aligned value of the X coordinate (in the world coordinate system) that will snap to the 0.5 subpixel boundary on the X axis when rendering on screen.
     y : PDouble
-    Initial Y world (user) system coordinate. This parameter receives aligned value of Y coordinate (in world coordinates system), that will snap to the 0.5 subpixel boundary on Y axis when rendering on screen.
+    Initial Y world (user) system coordinate. This parameter receives the aligned value of the Y coordinate (in the world coordinate system) that will snap to the 0.5 subpixel boundary on the Y axis when rendering on screen.
 }
 
 type
@@ -35,6 +35,7 @@ var
   x1, y1, x2, y2: double;
 begin
   agg^.clearAll(0, 0, 0, 0);
+  agg^.lineColor(CDark);
 
   // Initial coordinates
   x1 := 10;

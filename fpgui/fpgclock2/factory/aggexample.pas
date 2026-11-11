@@ -5,8 +5,7 @@ interface
 
 uses
   SysUtils,
-  agg_2D,
-  agg_basics;
+  agg_2D;
 
 type
   TAggExample = class
@@ -74,11 +73,18 @@ var
   
   function getBufItemAsWord(ADelta: byte): Word;
   var
-    y1: integer;
-    v: Word;
+    i: integer;
+    v, a: Word;
   begin
-    y1 := FHeight - y - 1;
-    v := FData[x * CColorW + y1 * FWidth * CColorW + ADelta];
+    i := x * CColorW + (FHeight - y - 1) * FWidth * CColorW;
+    v := FData[i + ADelta];
+    a := FData[i + 3];
+    if (ADelta <> 3) and (a > 0) and (a < 255) then
+    begin
+      v := v * 255 div a;
+      if v > 255 then
+        v := 255;
+    end;
     result := (v shl 8) or v;
   end;
   

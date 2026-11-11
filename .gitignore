@@ -1,7 +1,5 @@
 
-polyline.*
-
-arial.ttf
+fonts/arial.ttf
 
 *.o
 *.ppu

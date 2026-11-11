@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 type
@@ -22,7 +23,7 @@ begin
   agg^.clearAll(0, 0, 0, 0);
   //agg^.noLine;
   //agg^.fillColor(0, 0, 255);
-  agg^.lineColor(0, 0, 255);
+  agg^.lineColor(CBlue);
   agg^.lineWidth(0.05);
 
   agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);

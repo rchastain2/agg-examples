@@ -5,7 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 {
   https://www.crossgl.com/aggpas/documentation/index.html#Scale
@@ -26,11 +26,12 @@ const
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   {
-    Scaling with negative factors generates reflections. That can be utilized to create a mirror-like effects. (One additional translation must be involved to get the effect.)
+    Scaling with negative factors generates reflections. That can be utilized to create mirror-like effects. (One additional translation must be involved to get the effect.)
   }
   agg^.clearAll(0, 0, 0, 0);
   //agg^.clearAll(255, 255, 255);
   agg^.noFill;
+  agg^.lineColor(CBlue);
 
   // First triangle
   agg^.Triangle(100, 20, 20, 100, 180, 100);
@@ -39,8 +40,8 @@ begin
   agg^.Scale(1, -1);
   agg^.Translate(0, 210);
 
-  // The same triangle reflected in a new coordinates
-  agg^.lineColor($FF, $00, $00);
+  // The same triangle reflected in the new coordinates
+  agg^.lineColor(CRed);
   agg^.Triangle(100, 20, 20, 100, 180, 100);
 end;
 

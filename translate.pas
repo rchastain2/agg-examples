@@ -5,7 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 type
   TAggExample1 = class(TAggExample)
@@ -20,6 +20,8 @@ const
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   agg^.clearAll(0, 0, 0, 0);
+  agg^.lineColor(CDark);
+  agg^.fillColor(WithAlpha(CBlue, 127));
   
   agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);
   

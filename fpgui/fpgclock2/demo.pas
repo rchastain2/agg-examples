@@ -15,6 +15,7 @@ uses
   fpg_imgfmt_png,
   
   Agg2D,
+  Palette,
   ClockUtils;
 
 type
@@ -49,15 +50,11 @@ procedure TClockWidget.DoAggPainting;
 (* https://www.crossgl.com/aggpas/documentation/index.html#CopyImage2 *)
 var
   LAgg: TAgg2D;
-  LColor: TAggColor;
   LAngles: TClockAngles;
 begin
   LAgg := TAgg2D.Create(self);
   if LAgg.Attach(FImage, FALSE) then
   begin
-    //LLight.Construct(35, 151, 212); // #2397D4
-    LColor.Construct(38, 47, 69); // #262F45
-    
     LAgg.CopyImage(FStatic, 0, 0);
     
     LAgg.Translate(CImgWidth div 2, CImgHeight div 2);
@@ -80,7 +77,7 @@ begin
     LAngles := GetClockAngles(TRUE);
     
     LAgg.LineWidth(CLineWidth);
-    LAgg.LineColor(LColor);
+    LAgg.LineColor(CDark);
    {LAgg.LineCap(AGG_CapSquare);}
     LAgg.Line(0, 0, CRadius4 * Cos(LAngles.Hour),   CRadius4 * Sin(LAngles.Hour));
     LAgg.Line(0, 0, CRadius3 * Cos(LAngles.Minute), CRadius3 * Sin(LAngles.Minute));
@@ -92,13 +89,16 @@ end;
 constructor TClockWidget.Create(AComp: TComponent);
 const
   CFile = 'factory' + DirectorySeparator + 'static.png';
+var
+  LFile: string;
 begin
   inherited Create(AComp);
   FImage := TFpgImage.Create;
   FImage.AllocateImage(32, CImgWidth, CImgHeight);
-  FStatic := LoadImage_PNG(CFile);
+  LFile := ExtractFilePath(ParamStr(0)) + CFile;
+  FStatic := LoadImage_PNG(LFile);
   if not Assigned(FStatic) then
-    raise Exception.Create('Failed to load ' + CFile);
+    raise Exception.Create('Failed to load ' + LFile);
 end;
 
 destructor TClockWidget.Destroy;
@@ -155,14 +155,12 @@ begin
 
   WindowTitle := 'Clock for fpGUI & AGGPas';
   
-  SetPosition(0, 0, CImgWidth, CImgHeight);
-  //Width := CImgWidth;
-  //Width := CImgHeight;
+  Width := CImgWidth;
+  Height := CImgHeight;
   WindowPosition := wpScreenCenter;
   Sizeable := FALSE;
   
   LWidget := TClockWidget.Create(self);
-  //LWidget.SetPosition(0, 0, CImgWidth, CImgHeight);
   LWidget.Width := CImgWidth;
   LWidget.Height := CImgHeight;
 end;

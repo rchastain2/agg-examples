@@ -32,6 +32,8 @@ PFLAGS += -Fi$(FPGUI)/framework/src/main/pascal/corelib/render/software
 PFLAGS += -Fu$(FPGUI)/framework/src/main/pascal/corelib/render/software
 endif
 
+PFLAGS += -Fu../..
+
 PFLAGS += -vhq
 #PFLAGS += -vm6058
 #PFLAGS += -vm4046

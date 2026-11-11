@@ -6,6 +6,7 @@ uses
   AggExample,
   agg_2D,
   agg_basics,
+  Palette,
   ClockUtils;
 
 type
@@ -24,9 +25,7 @@ const
   R2 = 6 * SURFACE_WIDTH div 16;
   R3 = 5 * SURFACE_WIDTH div 16;
   R4 = 4 * SURFACE_WIDTH div 16;
-  R5 = 3 * SURFACE_WIDTH div 16;
 var
-  LLight, LDark, LWhite: Color;
   LAngles: TClockAngles;
   LHour, i: integer;
   LAngle, x, y: double;
@@ -38,24 +37,16 @@ var
   LPoints1: array[0..11] of TPoint;
   LPoints2: array[0..10] of TPoint;
 begin
-  (*
-  LLight.Construct(35, 151, 212); // #2397D4
-  LDark.Construct(38, 47, 69); // #262F45
-  *)
-  LLight.Construct(255, 0, 0, 127);
-  LDark.Construct(0, 0, 255);
-  LWhite.Construct(255, 255, 255);
-  
   agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);
-  agg^.clearAll(LLight);
+  agg^.clearAll(CBlue);
   
   agg^.lineWidth(8);
-  agg^.lineColor(LDark);
-  agg^.fillColor(LWhite);
+  agg^.lineColor(CDark);
+  agg^.fillColor(CWhite);
   agg^.ellipse(0, 0, R1, R1);
   
   agg^.noLine;
-  agg^.fillColor(LDark);
+  agg^.fillColor(CDark);
   for LHour := 0 to 11 do
   begin
     x := R2 * Cos(PI / 2 - LHour * PI / 6);
@@ -74,10 +65,10 @@ begin
   end;
   
  {agg^.lineWidth(1);
-  agg^.lineColor(LLight);
+  agg^.lineColor(CBlue);
   agg^.lineCap(CapRound);
-  agg^.fillColor(LLight);}
-  agg^.fillRadialGradient(0, 0, R2, LLight, LWhite);
+  agg^.fillColor(CBlue);}
+  agg^.fillRadialGradient(0, 0, R2, CLightGray, CWhite);
   for i := 1 to 11 do
   begin
    {agg^.curve(0, 0, LPoints2[i mod 11].x, LPoints2[i mod 11].y, LPoints1[i].x, LPoints1[i].y);
@@ -92,7 +83,7 @@ begin
   end;
   
   agg^.lineWidth(8);
-  agg^.lineColor(LDark);
+  agg^.lineColor(CDark);
   
   LAngles := GetClockAngles();
   agg^.line(0, 0, R4 * Cos(LAngles.Hour),   R4 * Sin(LAngles.Hour));

@@ -14,6 +14,7 @@ uses
   fpg_widget,
   
   Agg2D,
+  Palette,
   
   ClockUtils;
 
@@ -50,8 +51,8 @@ const
 procedure TClockWidget.DoAggPainting;
 const
 {$IFDEF Unix}
-  //CFont = 'arial.ttf';
-  CFont = '../Nougat-ExtraBlack.ttf';
+  //CFont = '../../fonts/arial.ttf';
+  CFont = '../../fonts/Nougat-ExtraBlack.ttf';
 {$ELSE}
   CFont = 'Arial';
 {$ENDIF}
@@ -64,7 +65,6 @@ const
   CPointW: array[boolean] of integer = (CLineW div 2 + 1, CLineW div 2 + 2);
 var
   LAgg: TAgg2D;
-  LLight, LDark: TAggColor;
   LPointW: integer;
   LAngl: TClockAngles;
   LHour: integer;
@@ -72,19 +72,16 @@ begin
   LAgg := TAgg2D.Create(self);
   if LAgg.Attach(FImage, FALSE) then
   begin
-    LLight.Construct(35, 151, 212); // #2397D4
-    LDark.Construct(38, 47, 69); // #262F45
-    
     LAgg.Translate(CImgWidth div 2, CImgHeight div 2);
-    LAgg.ClearAll(LLight);
+    LAgg.ClearAll(CBlue);
     
     LAgg.LineWidth(CLineW);
-    LAgg.LineColor(LDark);
-    LAgg.FillColor(255, 255, 255);
+    LAgg.LineColor(CDark);
+    LAgg.FillColor(CWhite);
     LAgg.Ellipse(0, 0, CRadius1, CRadius1);
     
     LAgg.NoLine;
-    LAgg.FillColor(LDark);
+    LAgg.FillColor(CDark);
     for LHour := 0 to 11 do
     begin
       LPointW := CPointW[LHour mod 3 = 0];
@@ -94,12 +91,12 @@ begin
     LAngl := GetClockAngles(TRUE);
     
     LAgg.LineWidth(CLineW);
-    LAgg.LineColor(LDark);
+    LAgg.LineColor(CDark);
     LAgg.Line(0, 0, CRadius4 * Cos(LAngl.Hour),   CRadius4 * Sin(LAngl.Hour));
     LAgg.Line(0, 0, CRadius3 * Cos(LAngl.Minute), CRadius3 * Sin(LAngl.Minute));
     
     LAgg.NoLine;
-    LAgg.Font(CFont, 18);
+    LAgg.Font({$IFDEF Unix}ExtractFilePath(ParamStr(0)) + {$ENDIF}CFont, 18);
     LAgg.TextAlignment(AGG_AlignRight, AGG_AlignBottom);
     LAgg.Text(CImgWidth div 2 - 12, CImgHeight div 2 - 12, 'AGGPas', true, 0.0, 0.0);
   end;
@@ -167,14 +164,12 @@ begin
 
   WindowTitle := 'Simple clock for fpGUI & AGGPas';
   
-  SetPosition(0, 0, CImgWidth, CImgHeight);
-  //Width := CImgWidth;
-  //Width := CImgHeight;
+  Width := CImgWidth;
+  Height := CImgHeight;
   WindowPosition := wpScreenCenter;
   Sizeable := FALSE;
   
   LWidget := TClockWidget.Create(self);
-  //LWidget.SetPosition(0, 0, CImgWidth, CImgHeight);
   LWidget.Width := CImgWidth;
   LWidget.Height := CImgHeight;
 end;

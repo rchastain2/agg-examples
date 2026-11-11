@@ -5,7 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 type
   TAggExample1 = class(TAggExample)
@@ -16,8 +16,8 @@ type
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   agg^.clearAll(0, 0, 0, 0);
-  agg^.lineColor(0, 0, 255);
-  agg^.fillColor(255, 0, 0, 127);
+  agg^.lineColor(CDark);
+  agg^.fillColor(WithAlpha(COrange, 127));
   agg^.lineWidth(5);
   
   agg^.triangle(10, 10, 10, 190, 190, 100);

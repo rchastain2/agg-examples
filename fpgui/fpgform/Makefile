@@ -2,10 +2,10 @@
 SOURCES := $(wildcard *.pas)
 TARGETS := $(SOURCES:%.pas=%)
 
-FPGUI := ~/Documents/sources/fpgui
+FPGUI ?= $(HOME)/Documents/sources/fpgui
 
+PC := fpc
 PFLAGS := -Mobjfpc -Sh
-PFLAGS += -FUunits
 
 ifdef PPU
 PFLAGS += -Fu$(FPGUI)/framework/target/units
@@ -23,19 +23,23 @@ endif
 
 PFLAGS += -Fi$(FPGUI)/framework/src/main/pascal/corelib/render/software
 PFLAGS += -Fu$(FPGUI)/extras/aggpas
+PFLAGS += -Fu../..
+
+UNITS := units
+PFLAGS += -FU$(UNITS)
+
+.PHONY: all clean distclean
 
 all: $(TARGETS)
 
-%: %.pas
-ifeq ($(OS),Windows_NT)
-	@if not exist units mkdir units
-else
-	@[ -d units ] || mkdir -p units
-endif
-	@fpc $< $(PFLAGS)
+%: %.pas | $(UNITS)
+	@$(PC) $< $(PFLAGS)
+
+$(UNITS):
+	@mkdir $@
 
 clean:
-	@rm -fv units/*.o units/*.ppu
+	@rm -fv $(UNITS)/*.o $(UNITS)/*.ppu
 
 distclean: clean
 	@rm -fv $(TARGETS)

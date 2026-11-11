@@ -1,6 +1,10 @@
-# Theodorus spiral
+# mathlib-fp examples
 
-Example for the [mathlib-fp](https://github.com/ikelaiah/mathlib-fp) library.
+Examples for the [mathlib-fp](https://github.com/ikelaiah/mathlib-fp) library, drawn with the *agg_2D* unit.
+
+## Theodorus spiral
+
+*theodorus.pas*
 
 ![Image](theodorus.png)
 
@@ -17,3 +21,19 @@ Example for the [mathlib-fp](https://github.com/ikelaiah/mathlib-fp) library.
 | <-1.49711, -2.78544> | 3.1623 | √10 |
 | <-0.61628, -3.25886> | 3.3166 | √11 |
 | <0.366304, -3.44468> | 3.4641 | √12 |
+
+## Vector rotation
+
+*rotation.pas*
+
+A `TVector2D` vector is rotated eight times by 15° (π/12), using a record helper that adds a `Rotate` method.
+
+![Image](rotation.png)
+
+## How to compile
+
+```
+make
+```
+
+Don't forget to edit the paths to AGGPas and mathlib-fp in the Makefile.

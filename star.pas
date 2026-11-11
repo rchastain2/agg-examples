@@ -5,7 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 type
   TAggExample1 = class(TAggExample)
@@ -14,17 +14,13 @@ type
   end;
 
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
-var
-  c1, c2: Color;
 begin
   agg^.clearAll(0, 0, 0, 0);
 
   agg^.lineCap(CapRound);
   agg^.lineWidth(5);
-  agg^.lineColor(0, 128, 0);
-  c1.Construct(0, 0, 255, 200);
-  c2.Construct(0, 0, 255, 50);
-  agg^.fillLinearGradient(200, 200, 300, 300, c1, c2);
+  agg^.lineColor(CGreen);
+  agg^.fillLinearGradient(30, 30, 170, 170, WithAlpha(CBlue, 200), WithAlpha(CBlue, 50));
   agg^.Star(100, 100, 30, 70, 55, 5);
 end;
 

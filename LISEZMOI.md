@@ -43,6 +43,20 @@ make LCL=1
 
 Vous devrez modifier dans *Makefile* le chemin vers les unités AGGPas.
 
+## Autres exemples
+
+| Dossier | Description |
+| --- | --- |
+| [fpgui/fpgclock](fpgui/fpgclock) | Horloge simple dans une fenêtre fpGUI |
+| [fpgui/fpgclock2](fpgui/fpgclock2) | Horloge dans une fenêtre fpGUI, avec un cadran pré-rendu dans une image PNG |
+| [fpgui/fpgform](fpgui/fpgform) | Dessin dans une fiche fpGUI |
+| [mathlib](mathlib) | Exemples utilisant la bibliothèque [mathlib-fp](https://github.com/ikelaiah/mathlib-fp) |
+| [msegui/tbitmap](msegui/tbitmap) | MSEgui, sans fenêtre : dessin dans une image enregistrée au format PNG |
+| [msegui/tbitmap-2](msegui/tbitmap-2) | Idem, AGGPas attaché directement à l'image |
+| [msegui/tpaintbox-tbitmap](msegui/tpaintbox-tbitmap) | MSEgui : dessin dans une zone de dessin (tpaintbox) |
+| [msegui/tpaintbox-tbitmap-2](msegui/tpaintbox-tbitmap-2) | Idem, AGGPas attaché directement à l'image |
+| [ptc](ptc) | Animation dans une console PTCPas |
+
 ## Crédits
 
 L'unité *AggExample* est dérivée du programme [Agg2DConsole.dpr](https://github.com/graemeg/fpGUI/blob/develop/extras/aggpas/agg-demos/Agg2DConsole.dpr).

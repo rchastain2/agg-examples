@@ -5,7 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 type
   TAggExample1 = class(TAggExample)
@@ -27,12 +27,12 @@ begin
   agg^.noLine;
 
   // Red Arrow
-  agg^.fillColor(255, 0, 0, 128);
+  agg^.fillColor(WithAlpha(CRed, 128));
   agg^.Triangle(100, 20, 40, 100, 160, 100);
   agg^.rectangle(70, 100, 130, 170);
 
-  // Coordinates will be reflected along line
-  // defined as from 0:0 to 90:85
+  // Coordinates will be reflected along the line
+  // from 0:0 to 90:85
   x := 90;
   y := 85;
 
@@ -51,7 +51,7 @@ begin
   agg^.Transformations(@af);
 
   // Blue Arrow (same as Red)
-  agg^.fillColor(0, 0, 255, 128);
+  agg^.fillColor(WithAlpha(CBlue, 128));
   agg^.Triangle(100, 20, 40, 100, 160, 100);
   agg^.rectangle(70, 100, 130, 170);
 end;

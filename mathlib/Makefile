@@ -17,10 +17,9 @@ PC := fpc
 PFLAGS := -Mdelphi
 PFLAGS += -Fu$(AGGPAS)
 PFLAGS += -Fu$(MATHLIB)
+PFLAGS += -Fu..
 
-# Directory for compiled units
 UNITS := units
-
 PFLAGS += -FU$(UNITS)
 
 ifeq ($(OS),Windows_NT)
@@ -29,20 +28,20 @@ else
 PREFIX := ./
 endif
 
+.PHONY: all clean distclean
+
 all: $(TARGETS)
 
-%: %.pas $(UNITS)
-	$(info [INFO] Compile $<)
+%: %.pas aggexample.pas | $(UNITS)
+	@rm -fv $@
 	@$(PC) $< $(PFLAGS)
-	$(info [INFO] Execute $@)
 	@$(PREFIX)$@
 
 $(UNITS):
-	$(info [INFO] Create directory for compiled units)
 	@mkdir $@
 
 clean:
 	@rm -fv *.bak *.log
 
 distclean: clean
-	@rm -fv $(TARGETS) units/*.o units/*.ppu
+	@rm -fv $(TARGETS) $(UNITS)/*.o $(UNITS)/*.ppu

@@ -15,6 +15,7 @@ uses
   msebitmap,
   mseformatpngwrite,
   agg_2D,
+  Palette,
   agg_basics;
 
 const
@@ -26,7 +27,6 @@ procedure Draw(ABitmap: tmaskedbitmap);
 var
   pixels: puint32;
   agg: agg2d_ptr;
-  c1, c2: Color;
   psrc: pbyte;
   y: integer;
 begin
@@ -34,11 +34,10 @@ begin
   fillbyte(pixels^, ABitmap.width * ABitmap.height * sizeof(uint32), 0);
 
   new(agg, construct);
-  c1.Construct(255, 0, 0, 255);
-  c2.Construct(255, 0, 0, 0);
   agg^.attach(pbyte(pixels), ABitmap.width, ABitmap.height, ABitmap.width * 4);
-  agg^.clearall(255, 255, 255, 255);
-  agg^.fillLinearGradient(0, 0, ABitmap.width, ABitmap.height, c1, c2);
+  agg^.clearall(CWhite);
+  agg^.lineColor(CDark);
+  agg^.fillLinearGradient(0, 0, ABitmap.width, ABitmap.height, COrange, WithAlpha(COrange, 0));
   agg^.arc(ABitmap.width div 2, ABitmap.height div 2, ABitmap.width div 3, ABitmap.height div 3, Deg2Rad(90), Deg2Rad(360));
   dispose(agg, destruct);
 

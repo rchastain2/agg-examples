@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 type
@@ -16,13 +17,11 @@ type
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 const
 {$IFDEF Unix}
-  //CFont = 'arial.ttf';
-  CFont = 'Nougat-ExtraBlack.ttf';
+  //CFont = 'fonts/arial.ttf';
+  CFont = 'fonts/Nougat-ExtraBlack.ttf';
 {$ELSE}
   CFont = 'Arial';
 {$ENDIF}
-var
-  c1, c2: Color;
 begin
   agg^.clearAll(0, 0, 0, 0);
   
@@ -30,10 +29,8 @@ begin
   //agg^.lineWidth(1);
   //agg^.lineColor(0, 0, 128);
   //agg^.fillColor(0, 0, 128);
-  c1.Construct(0, 0, 255, 255);
-  c2.Construct(255, 0, 0, 255);
-  agg^.fillLinearGradient(20, 20, 100, 20, c1, c2);
-  agg^.Font(CFont, 28, false, false, VectorFontCache, 0);//Deg2Rad(45));
+  agg^.fillLinearGradient(20, 20, 100, 20, CBlue, CRed);
+  agg^.Font(char_ptr(PChar({$IFDEF Unix}ExtractFilePath(ParamStr(0)) + {$ENDIF}CFont)), 28, false, false, VectorFontCache, 0);//Deg2Rad(45));
   agg^.Text(20, 20, 'AGGPas');
   
   //agg^.font(char_ptr(FONT_TIMES), 14.0, false, false);

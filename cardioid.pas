@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 type
@@ -28,8 +29,7 @@ var
 begin
   agg^.clearAll(0, 0, 0, 0);
   agg^.lineCap(CapRound);
-  agg^.lineColor(0, 0, 255, 255);
-  agg^.lineWidth(0.001);
+  agg^.lineColor(CBlue);
 
   agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);
   agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);

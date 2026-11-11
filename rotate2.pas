@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 {
@@ -24,14 +25,14 @@ const
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   {
-    One frequent case for rotation transformation is rotating something around it's own axis. For example, if user wants to rotate the whole TBitmap surface (around it's axis), two more translations must be involved, because before rotation the center of rotation is in coordinates origin (which is Top Left or Bottom Left corner). So the transformation sequence changes like this:
+    One frequent case for rotation transformation is rotating something around its own axis. For example, if the user wants to rotate the whole TBitmap surface (around its axis), two more translations must be involved, because before rotation the center of rotation is at the coordinate origin (which is Top Left or Bottom Left corner). So the transformation sequence changes like this:
   }
   agg^.clearAll(0, 0, 0, 0);
   //agg^.noFill;
   agg^.noLine;
 
   // First rectangle
-  agg^.fillColor($00, $00, $FF, $7F);
+  agg^.fillColor(WithAlpha(CBlue, 127));
   agg^.rectangle(70, 40, 170, 140);
 
   // [!] set center point to the middle of TBitmap surface
@@ -40,12 +41,12 @@ begin
   // Rotate by 15 degrees
   agg^.rotate(Deg2Rad(15));
 
-  // [!] return coordinates system back
+  // [!] restore the coordinate system
   agg^.Translate(SURFACE_WIDTH / 2, SURFACE_HEIGHT / 2);
 
-  // The same rectangle in a new coordinates
+  // The same rectangle in the new coordinates
   //agg^.lineColor($FF, $00, $00);
-  agg^.fillColor($FF, $00, $00, $7F);
+  agg^.fillColor(WithAlpha(CRed, 127));
   agg^.rectangle(70, 40, 170, 140);
 end;
 

@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 {
@@ -28,15 +29,15 @@ begin
   agg^.noLine;
 
   // First rectangle
-  agg^.fillColor($00, $00, $FF, $7F);
+  agg^.fillColor(WithAlpha(CBlue, 127));
   agg^.rectangle(70, 40, 170, 140);
 
   // Rotate by 15 degrees
   agg^.rotate(Deg2Rad(15));
 
-  // The same rectangle in a new coordinates
+  // The same rectangle in the new coordinates
   //agg^.lineColor($FF, $00, $00);
-  agg^.fillColor($FF, $00, $00, $7F);
+  agg^.fillColor(WithAlpha(CRed, 127));
   agg^.rectangle(70, 40, 170, 140);
 end;
 

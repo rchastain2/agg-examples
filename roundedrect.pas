@@ -11,7 +11,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 type
   TAggExample1 = class(TAggExample)
@@ -20,21 +20,16 @@ type
   end;
 
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
-var
-  c1, c2: Color;
 begin
   agg^.clearAll(0, 0, 0, 0);
 
   agg^.lineCap(CapRound);
   agg^.lineWidth(5);
   //agg^.lineColor(0, 0, 255);
-  c1.Construct(0, 0, 0, 0);
-  agg^.lineColor(c1);
+  agg^.lineColor(CDark);
   
   //agg^.fillColor(255, 0, 0, 255);
-  c1.Construct(60, 160, 255, 255);
-  c2.Construct(100, 255, 255, 0);
-  agg^.fillLinearGradient(10, 10, 190, 190, c1, c2);
+  agg^.fillLinearGradient(10, 10, 190, 190, CBlue, WithAlpha(CGreen, 0));
   agg^.roundedRect(20, 20, 180, 180, 10);
 end;
 

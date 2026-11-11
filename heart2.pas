@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 type
@@ -39,8 +40,8 @@ procedure TAggExample1.Draw(agg: Agg2D_ptr);
 
 begin
   agg^.clearAll(0, 0, 0, 0);
-  agg^.lineColor(255, 0, 0);
-  agg^.fillColor(255, 0, 0, 63);
+  agg^.lineColor(CRed);
+  agg^.fillColor(WithAlpha(CRed, 63));
   agg^.lineWidth(5);
   
   agg^.translate(-Width div 2, -Height div 2);

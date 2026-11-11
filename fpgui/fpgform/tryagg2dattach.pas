@@ -10,7 +10,8 @@ uses
   fpg_form,
   fpg_widget,
   fpg_checkbox,
-  Agg2D;
+  Agg2D,
+  Palette;
   
 type
   TFpgWidget1 = class(TFpgWidget)
@@ -57,12 +58,12 @@ begin
   ac := TAgg2D.Create(self);
   if ac.Attach(FImg, FFlipY) then
   begin
-    ac.ClearAll(255, 255, 255);
+    ac.ClearAll(CWhite);
     if FShowPath then
     begin
       // Indicate Path for Curve
-      ac.LineColor($00, $00, $FF);
-      ac.FillColor($00, $00, $FF);
+      ac.LineColor(CBlue);
+      ac.FillColor(CBlue);
       ac.LineWidth(0.2);
 
       ac.Rectangle( 00 - 4,  0 - 4,   0 + 4,  0 + 4);
@@ -76,7 +77,7 @@ begin
     end;
     // Draw Cubic Bezier curve
     ac.LineWidth(3);
-    ac.LineColor($32, $CD, $32);
+    ac.LineColor(CGreen);
     ac.Curve(0, 0, 50, 50, 100, 0, 150, 50);
   end;
   FImg.UpdateImage;
@@ -115,7 +116,10 @@ begin
   width := 300;
   height := 100;
   FWidget1 := TFpgWidget1.Create(self);
-  FWidget1.SetPosition(0, 0, 300, 100);
+  FWidget1.Left := 0;
+  FWidget1.Top := 0;
+  FWidget1.Width := 300;
+  FWidget1.Height := 100;
 
   FFCheckBoxShow := CreateCheckBox(self, 200, 0, 'Show Path');
   FFCheckBoxShow.OnChange := @OnShowPathChanged;

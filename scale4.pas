@@ -5,7 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 {
   https://www.crossgl.com/aggpas/documentation/index.html#Scale
@@ -28,6 +28,7 @@ begin
   agg^.clearAll(0, 0, 0, 0);
   //agg^.clearAll(255, 255, 255);
   agg^.noFill;
+  agg^.lineColor(CBlue);
 
   // First rectangle
   agg^.rectangle(30, 30, 130, 130);
@@ -35,9 +36,9 @@ begin
   // Scale 40% on X axis and 20% on Y axis
   agg^.Scale(1.4, 1.2);
 
-  // The same rectangle in a new coordinates
-  agg^.lineColor($FF, $00, $00);
-  agg^.rectangle(30, 40, 130, 130);
+  // The same rectangle in the new coordinates
+  agg^.lineColor(CRed);
+  agg^.rectangle(30, 30, 130, 130);
 end;
 
 var

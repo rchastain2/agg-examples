@@ -5,7 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 type
   TAggExample1 = class(TAggExample)
@@ -15,12 +15,11 @@ type
 
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
 var
-  c1, c2: Color;
   w4, h4: integer;
 begin
   agg^.clearAll(0, 0, 0, 0);
   agg^.lineWidth(8);
-  agg^.lineColor(0, 0, 255, 255);
+  agg^.lineColor(CBlue);
   
   w4 := Width div 4;
   h4 := Height div 4;

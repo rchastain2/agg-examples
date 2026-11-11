@@ -5,7 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 type
   TAggExample1 = class(TAggExample)
@@ -22,7 +22,7 @@ begin
   agg^.clearAll(0, 0, 0, 0);
   agg^.lineCap(CapRound);
   agg^.lineWidth(2);
-  agg^.lineColor(0, 0, 255, 255);
+  agg^.lineColor(CBlue);
   
   agg^.translate(0.5, 0.5);
   agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);

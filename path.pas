@@ -22,7 +22,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 type
   TAggExample1 = class(TAggExample)
@@ -35,8 +35,8 @@ begin
   agg^.clearAll(0, 0, 0, 0);
   agg^.lineCap(CapRound);
   agg^.lineWidth(5);
-  agg^.lineColor(0, 0, 255);
-  agg^.fillColor(255, 0, 0, 127);
+  agg^.lineColor(CDark);
+  agg^.fillColor(WithAlpha(COrange, 127));
   
   agg^.resetPath;
   agg^.moveTo( 10, 100);

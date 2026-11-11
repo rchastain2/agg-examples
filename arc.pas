@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 {
@@ -18,19 +19,15 @@ type
   end;
 
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
-var
-  c1, c2: Color;
 begin
   agg^.clearAll(0, 0, 0, 0);
   
   agg^.lineCap(CapRound);
   agg^.lineWidth(5);
-  agg^.lineColor(0, 0, 255);
+  agg^.lineColor(CDark);
   
   //agg^.fillColor(255, 0, 0, 255);
-  c1.Construct(255, 0, 0, 255);
-  c2.Construct(255, 0, 0, 0);
-  agg^.fillLinearGradient(0, 0, Width, Height, c1, c2);
+  agg^.fillLinearGradient(0, 0, Width, Height, COrange, WithAlpha(COrange, 0));
   
   agg^.arc(Width div 2, Height div 2, Width div 3, Height div 3, Deg2Rad(90), Deg2Rad(360));
 end;

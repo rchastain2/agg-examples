@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 type
@@ -23,7 +24,7 @@ procedure TAggExample1.Draw(agg: Agg2D_ptr);
 begin
   agg^.clearAll(0, 0, 0, 0);
   agg^.lineCap(CapRound);
-  agg^.lineColor(0, 0, 255, 255);
+  agg^.lineColor(CBlue);
  
   // Draw circle in the center of the image
   // Basic transformation which converts world coordinates to image coordinates

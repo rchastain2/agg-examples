@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 type
@@ -22,8 +23,8 @@ type
   end;
 const
 {$IFDEF Unix}
-  {CFont = 'arial.ttf';}
-  CFont = '../../Nougat-ExtraBlack.ttf';
+  {CFont = '../../../fonts/arial.ttf';}
+  CFont = '../../../fonts/Nougat-ExtraBlack.ttf';
 {$ELSE}
   CFont = 'Arial';
 {$ENDIF}
@@ -33,22 +34,18 @@ var
   LPointWidth: integer;
   LPoints1: array[0..11] of TPoint;
   LPoints2: array[0..10] of TPoint;
-  LLight, LDark, LWhite: Color;
 begin
-  LLight.Construct(35, 151, 212); // #2397D4
-  LDark.Construct(38, 47, 69); // #262F45
-  LWhite.Construct(255, 255, 255);
 
   agg^.translate(CImgWidth div 2, CImgHeight div 2);
-  agg^.clearAll(LLight);
+  agg^.clearAll(CBlue);
 
   agg^.lineWidth(CLineWidth);
-  agg^.lineColor(LDark);
-  agg^.fillColor(LWhite);
+  agg^.lineColor(CDark);
+  agg^.fillColor(CWhite);
   agg^.ellipse(0, 0, CRadius1, CRadius1);
 
   agg^.noLine;
-  agg^.fillColor(LDark);
+  agg^.fillColor(CDark);
   for LHour := 0 to 11 do
   begin
     x := CRadius2 * Cos(PI / 2 - LHour * PI / 6);
@@ -60,7 +57,7 @@ begin
   end;
 
   agg^.noLine;
-  agg^.font(CFont, 18);
+  agg^.font(char_ptr(PChar({$IFDEF Unix}ExtractFilePath(ParamStr(0)) + {$ENDIF}CFont)), 18);
   agg^.textAlignment(AlignRight, AlignBottom);
   agg^.text(CImgWidth div 2 - 12, - CImgHeight div 2 + 12, 'AGGPas', true, 0.0, 0.0);
 
@@ -73,11 +70,11 @@ begin
   end;
 
  {agg^.lineWidth(1);
-  agg^.lineColor(LLight);
+  agg^.lineColor(CBlue);
   agg^.lineCap(CapRound);
-  agg^.fillColor(LLight);
-  agg^.fillRadialGradient(0, 0, CRadius2, LLight, LWhite);}
-  agg^.fillRadialGradient(0, 0, CRadius2, LDark, LWhite);
+  agg^.fillColor(CBlue);
+  agg^.fillRadialGradient(0, 0, CRadius2, CBlue, CWhite);}
+  agg^.fillRadialGradient(0, 0, CRadius2, CLightGray, CWhite);
   for i := 1 to 11 do
   begin
    {agg^.curve(0, 0, LPoints2[i mod 11].x, LPoints2[i mod 11].y, LPoints1[i].x, LPoints1[i].y);

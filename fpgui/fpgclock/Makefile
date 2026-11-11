@@ -2,12 +2,10 @@
 SOURCES := $(filter-out clockutils.pas,$(wildcard *.pas))
 TARGETS := $(SOURCES:%.pas=%)
 
-ifndef FPGUI
-FPGUI := ~/Documents/sources/fpgui
-endif
+FPGUI ?= $(HOME)/Documents/sources/fpgui
 
+PC := fpc
 PFLAGS := -Mobjfpc -Sh -ghl
-PFLAGS += -FUunits
 
 ifdef PPU
 PFLAGS += -Fu$(FPGUI)/framework/target/units
@@ -25,19 +23,25 @@ endif
 
 PFLAGS += -Fi$(FPGUI)/framework/src/main/pascal/corelib/render/software
 PFLAGS += -Fu$(FPGUI)/extras/aggpas
+PFLAGS += -Fu../..
+
+UNITS := units
+PFLAGS += -FU$(UNITS)
+
+.PHONY: all clean distclean
 
 all: $(TARGETS)
 
-%: %.pas
-ifeq ($(OS),Windows_NT)
-	@if not exist units mkdir units
-else
-	@[ -d units ] || mkdir -p units
-endif
-	@fpc $< $(PFLAGS)
+demo: clockutils.pas
+
+%: %.pas | $(UNITS)
+	@$(PC) $< $(PFLAGS)
+
+$(UNITS):
+	@mkdir $@
 
 clean:
-	@rm -fv units/*.o units/*.ppu
+	@rm -fv $(UNITS)/*.o $(UNITS)/*.ppu
 
 distclean: clean
 	@rm -fv $(TARGETS)

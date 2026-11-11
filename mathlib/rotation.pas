@@ -6,9 +6,9 @@ program VectorRotationDemo;
 uses
   SysUtils, Math,
   agg_2D,
+  Palette,
   agg_basics,
   AggExample,
-  MathBase.SharedTypes,
   GeometryLib.Geometry;
 
 type
@@ -50,22 +50,18 @@ procedure TAggExample1.Draw(agg: Agg2D_ptr);
 
 var
   V: TVector2D;
-  c1, c2, c3: Color;
   n: Integer;
 
 begin
-  c1.Construct($FF, $FF, $E0, $FF);
-  c2.Construct($FF, $CC, $00, $FF);
-  c3.Construct($FF, $8C, $00, $FF);
   
-  agg^.clearAll(c1);
+  agg^.clearAll(CWhite);
   agg^.lineCap(CapRound);
   
   agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);
   agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);
   
   agg^.lineWidth(0.002);
-  agg^.lineColor(c2);
+  agg^.lineColor(CBlue);
   
   DrawLine(-0.4, 0, 0.4, 0);
   DrawLine(0, -0.4, 0, 0.4);
@@ -73,7 +69,7 @@ begin
   V := TVector2D.Create(0.35, 0);
   
   agg^.lineWidth(0.003);
-  agg^.lineColor(c3);
+  agg^.lineColor(COrange);
   
   DrawVector(V);
   

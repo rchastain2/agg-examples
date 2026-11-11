@@ -43,6 +43,7 @@ implementation
 uses
   main_mfm,
   agg_2D,
+  Palette,
   agg_basics;
 
 procedure tmainfo.mainfo_oncreate(const sender: TObject);
@@ -61,14 +62,12 @@ end;
 procedure tmainfo.tpaintbox1_onpaint(const sender: twidget; const acanvas: tcanvas);
 var
   agg: agg2d_ptr;
-  c1, c2: Color;
 begin
   new(agg, construct);
-  c1.Construct(255, 0, 0, 255);
-  c2.Construct(255, 0, 0, 0);
   agg^.attach(pbyte(fbitmap.scanline[0]), fbitmap.width, fbitmap.height, fbitmap.scanlinestep);
-  agg^.clearall(255, 255, 255, 255);
-  agg^.fillLinearGradient(0, 0, fbitmap.width, fbitmap.height, c1, c2);
+  agg^.clearall(CWhite);
+  agg^.lineColor(CDark);
+  agg^.fillLinearGradient(0, 0, fbitmap.width, fbitmap.height, COrange, WithAlpha(COrange, 0));
   agg^.arc(fbitmap.width div 2, fbitmap.height div 2, fbitmap.width div 3, fbitmap.height div 3, Deg2Rad(90), Deg2Rad(360));
   dispose(agg, destruct);
   fbitmap.paint(acanvas, nullpoint);

@@ -5,6 +5,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
+  Palette,
   agg_basics;
 
 type
@@ -41,11 +42,11 @@ begin
   
   agg^.clearAll(0, 0, 0, 0);
   
-  agg^.lineColor(255, 0, 0, 127);
+  agg^.lineColor(WithAlpha(CRed, 127));
   agg^.lineWidth(10);
   DrawHeart(Width / 2, Height / 2, Width / 3, 0);
   
-  agg^.lineColor(255, 0, 0);
+  agg^.lineColor(CRed);
   agg^.lineWidth(5);
   DrawHeart(Width / 2, Height / 2, Width / 3, 0);
 end;

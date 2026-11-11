@@ -1,34 +1,35 @@
 
-PC = fpc
-
-ifdef LCL
-LAZARUS := ~/Documents/sources/lazarus
-AGGPAS := $(LAZARUS)/components/aggpas/src
-else
-FPGUI := ~/Documents/sources/fpgui
-AGGPAS := $(FPGUI)/framework/src/main/pascal/corelib/render/software
-endif
-
-PFLAGS := -Mobjfpc -Sh
-PFLAGS += -FUunits
-
-PFLAGS += -Fu$(AGGPAS)
-
 SOURCES := $(wildcard *.pas)
 TARGETS := $(SOURCES:%.pas=%)
 
+ifdef LCL
+LAZARUS := $(HOME)/Documents/sources/lazarus
+AGGPAS := $(LAZARUS)/components/aggpas/src
+else
+FPGUI := $(HOME)/Documents/sources/fpgui
+AGGPAS := $(FPGUI)/framework/src/main/pascal/corelib/render/software
+endif
+
+PC := fpc
+PFLAGS := -Mobjfpc -Sh
+PFLAGS += -Fu$(AGGPAS)
+PFLAGS += -Fu..
+
+UNITS := units
+PFLAGS += -FU$(UNITS)
+
+.PHONY: all clean distclean
+
 all: $(TARGETS)
 
-%: %.pas
-ifeq ($(OS),Windows_NT)
-	@if not exist units mkdir units
-else
-	@[ -d units ] || mkdir -p units
-endif
-	@$(PC) $(PFLAGS) $<
+%: %.pas | $(UNITS)
+	@$(PC) $< $(PFLAGS)
+
+$(UNITS):
+	@mkdir $@
 
 clean:
-	@rm -fv *.bak *.bak? *.log *.o *.ppu
+	@rm -fv *.bak *.bak? *.log $(UNITS)/*.o $(UNITS)/*.ppu
 
 distclean: clean
 	@rm -fv $(TARGETS)

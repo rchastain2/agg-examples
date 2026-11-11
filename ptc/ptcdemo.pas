@@ -12,7 +12,7 @@ program BufferExample;
 uses
   ptc,
   agg_2D,
-  agg_basics;
+  Palette;
 
 const
   SURFACE_WIDTH = 400;
@@ -48,14 +48,20 @@ begin
       { create agg object }
       New(agg, Construct);
       agg^.attach(pbyte(pixels), width, height, width * 4);
-      agg^.clearAll(255, 0, 255, 255);
+      agg^.clearAll(CDark);
       agg^.noLine;
       
       { loop until a key is pressed }
       while not console.KeyPressed do
       begin
         { draw a random ellipse }
-        agg^.fillColor(Random(256), Random(256), Random(256), Random(256));
+        case Random(4) of
+          0: agg^.fillColor(WithAlpha(CBlue, Random(256)));
+          1: agg^.fillColor(WithAlpha(COrange, Random(256)));
+          2: agg^.fillColor(WithAlpha(CGreen, Random(256)));
+        else
+          agg^.fillColor(WithAlpha(CRed, Random(256)));
+        end;
         agg^.ellipse(Random(width), Random(height), 20, 20);
         
         { load pixels to console }

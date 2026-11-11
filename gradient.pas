@@ -13,7 +13,7 @@ uses
   SysUtils,
   AggExample,
   agg_2D,
-  agg_basics;
+  Palette;
 
 type
   TAggExample1 = class(TAggExample)
@@ -22,21 +22,16 @@ type
   end;
 
 procedure TAggExample1.Draw(agg: Agg2D_ptr);
-var
-  c1, c2, c3: Color;
 begin
   agg^.clearAll(0, 0, 0, 0);
   
   agg^.noLine;
   
-  c1.Construct(255, 255, 255);
-  c2.Construct(0, 0, 255);
-  c3.Construct(255, 0, 0, 127);
   
-  agg^.fillRadialGradient(50, 150, 40, c1, c2);
+  agg^.fillRadialGradient(50, 150, 40, CWhite, CBlue);
   agg^.rectangle(0, 100, 100, 200);
   
-  agg^.fillRadialGradient(150, 150, 40, c1, c2, c3);
+  agg^.fillRadialGradient(150, 150, 40, CWhite, CBlue, WithAlpha(CRed, 127));
   agg^.rectangle(100, 100, 200, 200);
 end;
 

@@ -4,7 +4,7 @@ program AggEx;
 uses
   SysUtils,
   agg_2D,
-  agg_basics,
+  Palette,
   AggExample,
   GeometryLib.Geometry;
 
@@ -36,18 +36,16 @@ const
   CIterations = 11;
 
 var
-  c: Color;
   V1, V2, old: TVector2D;
   n: integer;
 
 begin
-  agg^.clearAll(255, 255, 255, 255);
+  agg^.clearAll(CWhite);
   
   agg^.lineCap(CapRound);
   agg^.lineWidth(1 / 1000);
-  c.Construct(0, 0, 255, 63);
-  agg^.lineColor(c);
-  agg^.fillColor(c);
+  agg^.lineColor(WithAlpha(CBlue, 63));
+  agg^.fillColor(WithAlpha(CBlue, 63));
   
   agg^.scale(SURFACE_WIDTH, SURFACE_HEIGHT);
   agg^.translate(SURFACE_WIDTH div 2, SURFACE_HEIGHT div 2);
